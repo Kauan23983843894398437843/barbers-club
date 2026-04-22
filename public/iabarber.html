@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BarbersClub – Prévia de Corte com IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --laranja: #ff6b00;
+  --laranja-claro: #ff8b3d;
+  --branco: #ffffff;
+  --preto: #111;
+  --cinza: #666;
+}
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body {
+  background: url("https://deltabarbearia.com.br/wp-content/uploads/2025/04/barbearia-em-fortaleza-7.webp") center/cover no-repeat fixed;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  z-index: 0;
+}
+header {
+  position: relative;
+  z-index: 2;
+  background: var(--laranja);
+  padding: 16px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--branco);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+header button {
+  background: var(--branco);
+  color: var(--laranja);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+header button:hover {
+  background: #ffe3cc;
+  transform: scale(1.05);
+}
+main {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+.main-wrapper {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  max-width: 1300px;
+}
+.side-info {
+  flex: 1;
+  color: var(--branco);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  animation: fadeIn 1.2s ease;
+}
+.side-info h2 {
+  font-size: 2rem;
+  color: var(--laranja-claro);
+}
+.side-info p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #f1f1f1;
+}
+.side-info .icon {
+  font-size: 3rem;
+  color: var(--laranja);
+}
+.upload-card {
+  flex: 1.5;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  text-align: center;
+  color: var(--branco);
+  animation: slideUp 1.1s ease;
+}
+.upload-card h3 {
+  color: var(--laranja-claro);
+  font-size: 1.7rem;
+  margin-bottom: 10px;
+}
+.upload-card p {
+  color: #ddd;
+  margin-bottom: 20px;
+}
+.upload-area {
+  position: relative;
+  background: rgba(255,255,255,0.2);
+  border: 2px dashed rgba(255,255,255,0.6);
+  border-radius: 14px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.upload-area:hover {
+  background: rgba(255,255,255,0.3);
+}
+.upload-area label {
+  background: var(--laranja);
+  padding: 12px 26px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: var(--branco);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255,107,0,0.3);
+  transition: 0.3s;
+}
+.upload-area label:hover {
+  background: var(--laranja-claro);
+  transform: scale(1.05);
+}
+#fileInput { display: none; }
+.preview {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px 0;
+}
+.preview img {
+  width: 45%;
+  border-radius: 10px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 0.6s;
+}
+.preview img.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+select, button.btn {
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+select {
+  background: rgba(255,255,255,0.8);
+  color: var(--preto);
+  width: 70%;
+  margin-bottom: 20px;
+}
+.btn {
+  background: var(--laranja);
+  color: var(--branco);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 70%;
+}
+.btn:hover {
+  background: var(--laranja-claro);
+  transform: scale(1.05);
+}
+.status {
+  margin-top: 10px;
+  color: #eee;
+  font-size: 0.9rem;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+footer {
+  background: rgba(255,255,255,0.1);
+  text-align: center;
+  color: #eee;
+  font-size: 0.9rem;
+  padding: 10px;
+  z-index: 2;
+}
+@media (max-width: 900px) {
+  .main-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .side-info { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BarbersClub</h1>
+  <button onclick="window.location.href='../../../barbersclub/index-html/index.html'">Voltar</button>
+
+</header>
+
+<main>
+  <div class="main-wrapper">
+    <div class="side-info">
+      <div>
+        <div class="icon">💈</div>
+        <h2>Estilo e Tecnologia</h2>
+        <p>Transforme seu visual em segundos com nossa IA exclusiva de cortes masculinos. Veja como você ficaria antes mesmo de pegar na tesoura.</p>
+      </div>
+      <div>
+        <div class="icon">🔥</div>
+        <h2>10+ Estilos Clássicos e Modernos</h2>
+        <p>Do Buzz Cut ao Pompadour, explore tendências e descubra qual combina melhor com seu rosto e personalidade.</p>
+      </div>
+      <div>
+        <div class="icon">✨</div>
+        <h2>Resultados Fotorrealistas</h2>
+        <p>Com tecnologia OpenAI, nossa prévia traz o resultado mais próximo possível da realidade. Sem filtros, só estilo.</p>
+      </div>
+    </div>
+
+    <div class="upload-card">
+      <h3>Prévia de Corte com IA</h3>
+      <p>Envie sua foto e veja o novo visual.</p>
+      <div class="upload-area">
+        <input id="fileInput" type="file" accept="image/*">
+        <label for="fileInput">📸 Enviar Foto</label>
+      </div>
+
+      <div class="preview">
+        <img id="originalImg" alt="Antes">
+        <img id="previewImg" alt="Depois">
+      </div>
+
+      <select id="styleSelect">
+        <option value="">Selecione um estilo</option>
+        <option>Buzz cut</option>
+        <option>Fade</option>
+        <option>Moicano</option>
+        <option>Undercut</option>
+        <option>Pompadour</option>
+        <option>Corte César</option>
+        <option>Topete</option>
+        <option>Corte militar</option>
+        <option>Corte francês</option>
+        <option>Corte social</option>
+      </select>
+      <br>
+      <button class="btn" id="generateBtn">Gerar Prévia</button>
+      <div class="status" id="status"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2025 BarbersClub – Todos os direitos reservados
+</footer>
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const originalImg = document.getElementById("originalImg");
+const previewImg = document.getElementById("previewImg");
+const generateBtn = document.getElementById("generateBtn");
+const styleSelect = document.getElementById("styleSelect");
+const statusEl = document.getElementById("status");
+let currentFile = null;
+
+fileInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  currentFile = file;
+  originalImg.src = URL.createObjectURL(file);
+  originalImg.classList.add("show");
+  previewImg.classList.remove("show");
+  statusEl.textContent = "Foto carregada!";
+});
+
+async function convertToPng(file) {
+  if (file.type === "image/png") return file;
+  return new Promise((resolve) => {
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = () => img.src = reader.result;
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      canvas.getContext("2d").drawImage(img, 0, 0);
+      canvas.toBlob((blob) => {
+        resolve(new File([blob], "upload.png", { type: "image/png" }));
+      }, "image/png");
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+generateBtn.addEventListener("click", async () => {
+  if (!currentFile) return statusEl.textContent = "Envie uma foto primeiro.";
+  const style = styleSelect.value;
+  if (!style) return statusEl.textContent = "Selecione um estilo.";
+  statusEl.textContent = "Gerando prévia...";
+  try {
+    const filePNG = await convertToPng(currentFile);
+    const fd = new FormData();
+    fd.append("photo", filePNG);
+    fd.append("style", style);
+    const res = await fetch("/api/preview", { method: "POST", body: fd });
+    const data = await res.json();
+    previewImg.src = data.url;
+    previewImg.classList.add("show");
+    statusEl.textContent = "Prévia gerada!";
+  } catch {
+    statusEl.textContent = "Erro ao gerar prévia.";
+  }
+});
+</script>
+
+</body>
+</html>
