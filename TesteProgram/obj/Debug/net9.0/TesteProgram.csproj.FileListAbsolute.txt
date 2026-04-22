@@ -1,0 +1,14 @@
+C:\xampp\htdocs\barbersclub\TesteProgram\bin\Debug\net9.0\TesteProgram.exe
+C:\xampp\htdocs\barbersclub\TesteProgram\bin\Debug\net9.0\TesteProgram.deps.json
+C:\xampp\htdocs\barbersclub\TesteProgram\bin\Debug\net9.0\TesteProgram.runtimeconfig.json
+C:\xampp\htdocs\barbersclub\TesteProgram\bin\Debug\net9.0\TesteProgram.dll
+C:\xampp\htdocs\barbersclub\TesteProgram\bin\Debug\net9.0\TesteProgram.pdb
+C:\xampp\htdocs\barbersclub\TesteProgram\obj\Debug\net9.0\TesteProgram.GeneratedMSBuildEditorConfig.editorconfig
+C:\xampp\htdocs\barbersclub\TesteProgram\obj\Debug\net9.0\TesteProgram.AssemblyInfoInputs.cache
+C:\xampp\htdocs\barbersclub\TesteProgram\obj\Debug\net9.0\TesteProgram.AssemblyInfo.cs
+C:\xampp\htdocs\barbersclub\TesteProgram\obj\Debug\net9.0\TesteProgram.csproj.CoreCompileInputs.cache
+C:\xampp\htdocs\barbersclub\TesteProgram\obj\Debug\net9.0\TesteProgram.dll
+C:\xampp\htdocs\barbersclub\TesteProgram\obj\Debug\net9.0\refint\TesteProgram.dll
+C:\xampp\htdocs\barbersclub\TesteProgram\obj\Debug\net9.0\TesteProgram.pdb
+C:\xampp\htdocs\barbersclub\TesteProgram\obj\Debug\net9.0\TesteProgram.genruntimeconfig.cache
+C:\xampp\htdocs\barbersclub\TesteProgram\obj\Debug\net9.0\ref\TesteProgram.dll

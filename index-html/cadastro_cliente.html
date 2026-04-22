@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastre-se - BarbersClub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #1A1A1A;
+            --orange: #FF6B00;
+            --white: #FFFFFF;
+            --light-gray: #E5E5E5;
+            --dark-gray: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--light-gray);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Estilos da Barra de Navegação */
+        .navbar {
+            background-color: var(--black);
+            color: var(--white);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        /* Estilos do Formulário de Cadastro */
+        .register-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 0;
+        }
+
+        .register-container {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px; /* Aumentado para acomodar mais campos lado a lado */
+            padding: 40px;
+            margin: 0 auto; /* Centralizar o container */
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .register-header h2 {
+            font-size: 2rem;
+            color: var(--black);
+            margin-bottom: 10px;
+        }
+
+        .register-header p {
+            color: var(--dark-gray);
+        }
+
+        .register-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .register-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        .register-form input, .register-form select, .register-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .register-form input:focus, .register-form select:focus, .register-form textarea:focus {
+            border-color: var(--orange);
+            outline: none;
+        }
+
+        .register-form .password-field {
+            position: relative;
+        }
+
+        .register-form .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+
+        .register-form .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .register-form .form-row .form-group {
+            flex: 1;
+        }
+
+        .register-form .user-type {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .register-form .user-type-option {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .register-form .user-type-option.active {
+            border-color: var(--orange);
+            background-color: rgba(255, 107, 0, 0.05);
+        }
+
+        .register-form .user-type-option i {
+            font-size: 1.5rem;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .register-form .user-type-option.active i {
+            color: var(--orange);
+        }
+
+        .register-form .user-type-option h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .register-form .user-type-option p {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        .register-form .terms {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .register-form .terms input {
+            width: auto;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        .register-form .terms label {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .register-form .terms a {
+            color: var(--orange);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .register-form .terms a:hover {
+            color: #e05e00;
+        }
+
+        .register-form .btn-register {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--orange);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .register-form .btn-register:hover {
+            background-color: #e05e00;
+        }
+
+        .register-form .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--dark-gray);
+        }
+
+        .register-form .login-link a {
+            color: var(--orange);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .register-form .login-link a:hover {
+            color: #e05e00;
+        }
+
+        .barber-fields {
+            display: none;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .barber-fields h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--black);
+        }
+
+        /* Novo estilo para grid de 3 colunas */
+        .form-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        /* Novo estilo para grid de 2 colunas */
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .service-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .service-item label {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        .service-item input[type="text"] {
+            width: 100px;
+            margin-left: 10px;
+        }
+
+        .add-service-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: transparent;
+            color: var(--orange);
+            border: 1px solid var(--orange);
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .add-service-btn i {
+            margin-right: 5px;
+        }
+
+        .add-service-btn:hover {
+            background-color: var(--orange);
+            color: var(--white);
+        }
+
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: var(--orange);
+        }
+
+        .upload-area i {
+            font-size: 2rem;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            color: var(--dark-gray);
+            margin-bottom: 5px;
+        }
+
+        .upload-area .upload-btn {
+            display: inline-block;
+            color: var(--orange);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .upload-preview {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .upload-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* Estilos do Rodapé */
+        .footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--orange);
+        }
+
+        /* Estilos Responsivos */
+        @media (max-width: 768px) {
+            .register-form .form-row,
+            .form-grid-3,
+            .form-grid-2 {
+                grid-template-columns: 1fr;
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .register-container {
+                padding: 30px 20px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    &lt;!-- Barra de Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><h1>BarbersClub</h1></a>
+            </div>
+        </div>
+    </nav>
+
+    &lt;!-- Seção de Cadastro -->
+    <section class="register-section">
+        <div class="container">
+            <div class="register-container">
+                <div class="register-header">
+                    <h2>Crie sua conta</h2>
+                    <p>Junte-se à comunidade BarbersClub</p>
+                </div>
+                <form class="register-form" id="registerForm">
+                    <div class="user-type">
+                        <div class="user-type-option active" id="client-option">
+                            <i class="fas fa-user"></i>
+                            <h4>Cliente</h4>
+                            <p>Procuro serviços de barbearia</p>
+                        </div>
+                        <div class="user-type-option" id="barber-option">
+                            <i class="fas fa-cut"></i>
+                            <h4>Barbeiro</h4>
+                            <p>Ofereço serviços de barbearia</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name">Nome</label>
+                            <input type="text" id="first-name" name="first-name" placeholder="Seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Sobrenome</label>
+                            <input type="text" id="last-name" name="last-name" placeholder="Seu sobrenome" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Seu email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Telefone</label>
+                            <input type="tel" id="phone" name="phone" placeholder="(00) 00000-0000" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <div class="password-field">
+                                <input type="password" id="password" name="password" placeholder="Crie uma senha" required>
+                                <span class="toggle-password">
+                                    <i class="far fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm-password">Confirmar Senha</label>
+                            <div class="password-field">
+                                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirme sua senha" required>
+                                <span class="toggle-password">
+                                    <i class="far fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    &lt;!-- Campos adicionais para barbeiros -->
+                    <div class="barber-fields" id="barber-fields">
+                        <h3>Informações Profissionais</h3>
+                        
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="shop-name">Nome da Barbearia</label>
+                                <input type="text" id="shop-name" name="shop-name" placeholder="Nome da sua barbearia">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cnpj">CNPJ (opcional)</label>
+                                <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00">
+                            </div>
+                        </div>
+
+                        <div class="form-grid-3">
+                            <div class="form-group">
+                                <label for="cep">CEP</label>
+                                <input type="text" id="cep" name="cep" placeholder="00000-000">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="experience">Anos de Experiência</label>
+                                <input type="number" id="experience" name="experience" placeholder="Ex: 5" min="0">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="state">Estado</label>
+                                <select id="state" name="state">
+                                    <option value="">Selecione</option>
+                                    <option value="AC">Acre</option>
+                                    <option value="AL">Alagoas</option>
+                                    <option value="AP">Amapá</option>
+                                    <option value="AM">Amazonas</option>
+                                    <option value="BA">Bahia</option>
+                                    <option value="CE">Ceará</option>
+                                    <option value="DF">Distrito Federal</option>
+                                    <option value="ES">Espírito Santo</option>
+                                    <option value="GO">Goiás</option>
+                                    <option value="MA">Maranhão</option>
+                                    <option value="MT">Mato Grosso</option>
+                                    <option value="MS">Mato Grosso do Sul</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="PA">Pará</option>
+                                    <option value="PB">Paraíba</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="PE">Pernambuco</option>
+                                    <option value="PI">Piauí</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="RN">Rio Grande do Norte</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="RO">Rondônia</option>
+                                    <option value="RR">Roraima</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="SE">Sergipe</option>
+                                    <option value="TO">Tocantins</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="address">Endereço</label>
+                                <input type="text" id="address" name="address" placeholder="Rua, número, bairro">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="city">Cidade</label>
+                                <input type="text" id="city" name="city" placeholder="Sua cidade">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bio">Biografia Profissional</label>
+                            <textarea id="bio" name="bio" rows="3" placeholder="Conte um pouco sobre sua experiência e especialidades..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Serviços Oferecidos</label>
+                            <div class="form-grid-2">
+                                <div class="service-item">
+                                    <input type="checkbox" id="service-1" name="services[]" value="Corte de Cabelo">
+                                    <label for="service-1">Corte de Cabelo</label>
+                                    <input type="text" name="service-price-1" placeholder="Preço (R$)">
+                                </div>
+                                <div class="service-item">
+                                    <input type="checkbox" id="service-2" name="services[]" value="Barba">
+                                    <label for="service-2">Barba</label>
+                                    <input type="text" name="service-price-2" placeholder="Preço (R$)">
+                                </div>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="service-item">
+                                    <input type="checkbox" id="service-3" name="services[]" value="Corte e Barba">
+                                    <label for="service-3">Corte e Barba</label>
+                                    <input type="text" name="service-price-3" placeholder="Preço (R$)">
+                                </div>
+                                <div class="service-item">
+                                    <input type="checkbox" id="service-4" name="services[]" value="Tratamento Capilar">
+                                    <label for="service-4">Tratamento Capilar</label>
+                                    <input type="text" name="service-price-4" placeholder="Preço (R$)">
+                                </div>
+                            </div>
+                            <button type="button" class="add-service-btn">
+                                <i class="fas fa-plus"></i> Adicionar Serviço Personalizado
+                            </button>
+                        </div>
+                        
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="opening-time">Horário de Abertura</label>
+                                <input type="time" id="opening-time" name="opening-time">
+                            </div>
+                            <div class="form-group">
+                                <label for="closing-time">Horário de Fechamento</label>
+                                <input type="time" id="closing-time" name="closing-time">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Fotos da Barbearia (opcional)</label>
+                            <div class="upload-area" id="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Arraste e solte imagens aqui</p>
+                                <p>ou</p>
+                                <span class="upload-btn">Selecione arquivos</span>
+                                <input type="file" id="shop-photos" name="shop-photos[]" multiple style="display: none;">
+                            </div>
+                            <div class="upload-preview" id="upload-preview"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="terms">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">
+                            Eu concordo com os <a href="#">Termos de Serviço</a> e <a href="#">Política de Privacidade</a> do BarbersClub.
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-register">Criar Conta</button>
+                    
+                    <div class="login-link">
+                        <p>Já tem uma conta? <a href="login.html">Entrar</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    &lt;!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 BarbersClub. Todos os direitos reservados.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/barbers.club2025" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Alternar visibilidade da senha
+    const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+    
+    togglePasswordButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const passwordField = this.previousElementSibling;
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            
+            // Alterna o ícone
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    });
+    
+    // Alternar entre tipos de usuário
+    const clientOption = document.getElementById('client-option');
+    const barberOption = document.getElementById('barber-option');
+    const barberFields = document.getElementById('barber-fields');
+    
+    // Função para mostrar campos de barbeiro
+    function showBarberFields() {
+        barberOption.classList.add('active');
+        clientOption.classList.remove('active');
+        barberFields.style.display = 'block';
+        
+        // Adicionar required aos campos principais de barbeiro
+        document.getElementById('shop-name').setAttribute('required', '');
+        document.getElementById('address').setAttribute('required', '');
+        document.getElementById('city').setAttribute('required', '');
+        document.getElementById('state').setAttribute('required', '');
+    }
+    
+    // Função para esconder campos de barbeiro
+    function hideBarberFields() {
+        clientOption.classList.add('active');
+        barberOption.classList.remove('active');
+        barberFields.style.display = 'none';
+        
+        // Remover required dos campos de barbeiro
+        const barberRequiredInputs = barberFields.querySelectorAll('[required]');
+        barberRequiredInputs.forEach(input => {
+            input.removeAttribute('required');
+        });
+    }
+    
+    // Adicionar event listeners para os botões de tipo de usuário
+    clientOption.addEventListener('click', hideBarberFields);
+    barberOption.addEventListener('click', showBarberFields);
+    
+    // Verificar se o usuário já selecionou barbeiro (para casos de refresh da página)
+    if (barberOption.classList.contains('active')) {
+        showBarberFields();
+    }
+    
+    // Adicionar serviço personalizado
+    const addServiceBtn = document.querySelector('.add-service-btn');
+    const serviceItems = document.querySelector('.service-items');
+    let serviceCount = 5; // Começando do 5 porque já temos 4 serviços
+    
+    addServiceBtn.addEventListener('click', function() {
+        // Criar um container para os novos serviços
+        const serviceContainer = document.createElement('div');
+        serviceContainer.className = 'form-grid-2';
+        
+        // Criar o novo serviço
+        const newService = document.createElement('div');
+        newService.className = 'service-item';
+        newService.innerHTML = `
+            <input type="checkbox" id="service-${serviceCount}" name="services[]" value="custom">
+            <input type="text" name="service-name-${serviceCount}" placeholder="Nome do serviço" style="flex: 1; margin-right: 10px;">
+            <input type="text" name="service-price-${serviceCount}" placeholder="Preço (R$)">
+        `;
+        
+        // Adicionar o novo serviço antes do botão
+        addServiceBtn.parentNode.insertBefore(newService, addServiceBtn);
+        serviceCount++;
+    });
+    
+    // Upload de imagens
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('shop-photos');
+    const uploadPreview = document.getElementById('upload-preview');
+    
+    uploadArea.addEventListener('click', function() {
+        fileInput.click();
+    });
+    
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--orange');
+    });
+    
+    uploadArea.addEventListener('dragleave', function() {
+        uploadArea.style.borderColor = '#ddd';
+    });
+    
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#ddd';
+        
+        if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            showPreview(e.dataTransfer.files);
+        }
+    });
+    
+    fileInput.addEventListener('change', function() {
+        showPreview(this.files);
+    });
+    
+    function showPreview(files) {
+        if (files.length === 0) return;
+        
+        uploadPreview.innerHTML = '';
+        uploadPreview.style.display = 'block';
+        
+        for (let i = 0; i < files.length; i++) {
+            if (files[i].type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(files[i]);
+                img.style.maxHeight = '100px';
+                img.style.marginRight = '10px';
+                img.style.marginBottom = '10px';
+                uploadPreview.appendChild(img);
+            }
+        }
+    }
+    
+    // Validação do formulário
+    const registerForm = document.getElementById('registerForm');
+    
+    registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validar email
+        const email = document.getElementById('email').value;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Por favor, insira um email válido.');
+            return;
+        }
+        
+        // Validar telefone (formato (00) 00000-0000)
+        const phone = document.getElementById('phone').value;
+        const phoneRegex = /^$$\d{2}$$\s\d{4,5}-\d{4}$/;
+        if (!phoneRegex.test(phone)) {
+            alert('Por favor, insira um telefone no formato (00) 00000-0000.');
+            return;
+        }
+        
+        // Validar senha
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        if (password.length < 6) {
+            alert('A senha deve ter pelo menos 6 caracteres.');
+            return;
+        }
+        
+        if (password !== confirmPassword) {
+            alert('As senhas não coincidem.');
+            return;
+        }
+        
+        // Se for barbeiro, validar campos adicionais
+        if (barberOption.classList.contains('active')) {
+            const shopName = document.getElementById('shop-name').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            
+            if (!shopName || !address || !city || !state) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+        }
+        
+        // Se tudo estiver válido, enviar o formulário
+        alert('Cadastro realizado com sucesso! Redirecionando para a página de login...');
+        window.location.href = 'login.html';
+    });
+    
+    // Máscara para telefone
+    const phoneInput = document.getElementById('phone');
+    
+    phoneInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        
+        if (value.length > 0) {
+            value = '(' + value;
+        }
+        if (value.length > 3) {
+            value = value.substring(0, 3) + ') ' + value.substring(3);
+        }
+        if (value.length > 10) {
+            value = value.substring(0, 10) + '-' + value.substring(10, 14);
+        }
+        
+        e.target.value = value;
+    });
+    
+    // Máscara para CNPJ
+    const cnpjInput = document.getElementById('cnpj');
+    
+    cnpjInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        
+        if (value.length > 2) {
+            value = value.substring(0, 2) + '.' + value.substring(2);
+        }
+        if (value.length > 6) {
+            value = value.substring(0, 6) + '.' + value.substring(6);
+        }
+        if (value.length > 10) {
+            value = value.substring(0, 10) + '/' + value.substring(10);
+        }
+        if (value.length > 15) {
+            value = value.substring(0, 15) + '-' + value.substring(15, 17);
+        }
+        
+        e.target.value = value;
+    });
+    
+    // Máscara para CEP
+    const cepInput = document.getElementById('cep');
+    
+    cepInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        
+        if (value.length > 5) {
+            value = value.substring(0, 5) + '-' + value.substring(5, 8);
+        }
+        
+        e.target.value = value;
+    });
+});
+    </script>
+</body>
+</html>

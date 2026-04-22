@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarbersClub - Encontre seu Barbeiro Perfeito</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #1A1A1A;
+            --orange: #FF6B00;
+            --white: #FFFFFF;
+            --light-gray: #E5E5E5;
+            --dark-gray: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--white);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Estilos de Botões */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-login {
+            background-color: transparent;
+            color: var(--white);
+            border: 1px solid var(--white);
+        }
+        .btn-login:hover {
+            background-color: var(--white);
+            color: var(--black);
+        }
+
+        .btn-ia {
+            background-color: var(--orange);
+            color: var(--white);
+        }
+        
+        .btn-signup:hover {
+   background-color: var(--white);
+            color: var(--black);
+        }
+.btn-signup {
+    background-color: #333333; /* Cinza escuro */
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+ .btn-signup {
+            background-color: transparent;
+            color: var(--white);
+            border: 1px solid var(--white);
+        }
+
+.btn-ia:hover {
+            background-color: #e05e00;
+        }
+
+
+        /* Estilos da Barra de Navegação */
+        .navbar {
+            background-color: var(--black);
+            color: var(--white);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Estilos da Seção Hero */
+        .hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                url("https://s.alicdn.com/@sc04/kf/Uf96fcad39e4448b3837f192f9e512517k.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #fff; /* texto em branco para aparecer melhor */
+    text-align: center;
+    padding: 100px 20px;
+}
+
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--light-gray);
+        }
+
+        /* Estilos da Barra de Pesquisa */
+        .search-container {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background-color: var(--orange);
+            color: var(--white);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #e05e00;
+        }
+
+        /* Seção de Barbearias em Destaque */
+        .featured {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--black);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--orange);
+            margin: 15px auto 0;
+        }
+
+        .barbershop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .barbershop-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .barbershop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .barbershop-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .barbershop-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .barbershop-card:hover .barbershop-img img {
+            transform: scale(1.05);
+        }
+
+        .barbershop-info {
+            padding: 20px;
+        }
+
+        .barbershop-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+
+        .barbershop-info p {
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .barbershop-info i {
+            color: var(--orange);
+            margin-right: 5px;
+        }
+
+        .rating {
+            color: var(--orange);
+            font-size: 0.9rem;
+        }
+
+        .rating span {
+            color: var(--dark-gray);
+            margin-left: 5px;
+        }
+
+        /* Estilos para as Novas Seções */
+        .features-section {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 8px;
+            background-color: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--orange);
+            margin-bottom: 20px;
+            display: inline-block;
+            background-color: rgba(255, 107, 0, 0.1);
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+
+        .feature-description {
+            color: var(--dark-gray);
+            font-size: 0.95rem;
+        }
+
+        .benefits-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .benefit-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-icon {
+            font-size: 2rem;
+            color: var(--orange);
+            margin-bottom: 20px;
+        }
+
+        .benefit-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+
+        .benefit-description {
+            color: var(--dark-gray);
+            font-size: 0.95rem;
+        }
+
+        .section-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: var(--dark-gray);
+        }
+
+        /* Estilos da Seção de FAQs */
+        .faq-section {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .faq-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+        }
+
+        .faq-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--black);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .faq-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--orange);
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            background-color: var(--white);
+            color: var(--black);
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #f5f5f5;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            background-color: #f9f9f9;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-answer p {
+            padding: 0 20px;
+            margin: 0;
+            color: var(--dark-gray);
+        }
+
+        .faq-item.active .faq-question {
+            background-color: #f5f5f5;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 15px 0;
+        }
+
+        /* Estilos do Rodapé */
+        .footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo p {
+            color: var(--light-gray);
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--white);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--orange);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .footer-links li i {
+            color: var(--orange);
+            margin-right: 10px;
+            min-width: 16px;
+            margin-top: 4px;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--orange);
+        }
+
+        .support-info {
+            list-style: none;
+        }
+
+        .support-info li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: var(--light-gray);
+        }
+
+        .support-info i {
+            color: var(--orange);
+            margin-right: 10px;
+            min-width: 16px;
+            margin-top: 4px;
+        }
+
+        .support-info a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .support-info a:hover {
+            color: var(--orange);
+        }
+
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid var(--dark-gray);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--orange);
+        }
+
+        /* Estilos Responsivos */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .faq-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .search-btn {
+                border-radius: 4px;
+                padding: 10px;
+            }
+            
+            .barbershop-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 120px 0 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>BarbersClub</h1>
+            </div>
+            <div class="nav-buttons">
+    <button class="btn btn-login" onclick="window.location.href='login.html'">Entrar</button>
+    <button class="btn btn-signup" onclick="window.location.href='cadastro_cliente.html'">Cadastrar</button>
+    <button class="btn btn-ia" onclick="window.location.href='../basrbers.ia/public/iabarber.html'">
+    Teste seu corte com IA
+</button>
+
+
+
+
+</div>
+
+        </div>
+    </nav>
+
+    <!-- Seção Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Encontre seu Barbeiro Perfeito</h2>
+                <p>Conecte-se com as melhores barbearias da sua região</p>
+                
+                <!-- Barra de Pesquisa -->
+                <div class="search-container">
+                    <input type="text" placeholder="Buscar por nome, cidade ou estado" class="search-input">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Barbearias em Destaque -->
+    <section class="featured">
+        <div class="container">
+            <h2 class="section-title">Barbearias Recomendadas</h2>
+            <div class="barbershop-grid">
+                <!-- Cartão de Barbearia 1 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://www.qpontos.com.br/wp-content/uploads/2024/01/nathon-oski-EW_rqoSdDes-unsplash-scaled.jpg" alt="Barbearia Cortes Clássicos">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Cortes Clássicos</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cartão de Barbearia 2 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://www.arquiter.com.br/wp-content/uploads/2024/06/decoracao-para-barbearia-industrial-moderna-pequena_1-e1718140684439.webp" alt="Barbearia Estilos Urbanos">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Estilos Urbanos</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Rio de Janeiro, RJ</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cartão de Barbearia 3 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://gcbarberhouse.pt/wp-content/uploads/2022/02/40.jpg" alt="Barbearia Estilo Gentleman">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Estilo Gentleman</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Belo Horizonte, MG</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cartão de Barbearia 4 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://barbeariafionavalha.com.br/wp-content/uploads/2020/01/FIONAVALHA2UNID-4-1.jpg-Site-1-scaled.jpg" alt="Barbearia Fio da Navalha">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Fio da Navalha</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Curitiba, PR</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Como Funciona para Clientes</h2>
+            <p class="section-description">Descubra como o BarbersClub pode ajudar você a encontrar o barbeiro perfeito e agendar seu horário em poucos cliques.</p>
+            
+            <div class="features-container">
+                <div class="feature-card">
+                    <span class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <h3 class="feature-title">Busque Barbearias</h3>
+                    <p class="feature-description">Encontre barbearias próximas a você por localização, serviços ou avaliações dos clientes.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </span>
+                    <h3 class="feature-title">Agende Horários</h3>
+                    <p class="feature-description">Veja a disponibilidade em tempo real e agende seu horário sem precisar ligar ou enviar mensagens.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">
+                        <i class="fas fa-user-check"></i>
+                    </span>
+                    <h3 class="feature-title">Escolha seu Barbeiro</h3>
+                    <p class="feature-description">Veja o perfil dos profissionais, fotos de trabalhos anteriores e avaliações para escolher o melhor.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <h3 class="feature-title">Avalie o Serviço</h3>
+                    <p class="feature-description">Após o atendimento, deixe sua avaliação e ajude outros clientes a encontrarem os melhores profissionais.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+        <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title">Benefícios para Barbeiros</h2>
+            <p class="section-description">Descubra como o BarbersClub pode ajudar a impulsionar seu negócio, aumentar sua visibilidade e gerenciar seus agendamentos.</p>
+            
+            <div class="benefits-container">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="benefit-title">Aumente sua Visibilidade</h3>
+                    <p class="benefit-description">Apareça para milhares de clientes que buscam serviços de barbearia na sua região todos os dias.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="benefit-title">Gerencie Agendamentos</h3>
+                    <p class="benefit-description">Controle sua agenda, disponibilidade e horários de atendimento através de um painel administrativo intuitivo.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="benefit-title">Análise de Desempenho</h3>
+                    <p class="benefit-description">Acompanhe métricas importantes como número de clientes, avaliações e horários mais procurados.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="benefit-title">Fidelização de Clientes</h3>
+                    <p class="benefit-description">Utilize ferramentas de marketing para manter contato com seus clientes e oferecer promoções exclusivas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de FAQs -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Perguntas Frequentes</h2>
+            <div class="faq-container">
+                <!-- FAQs para Clientes -->
+                <div class="faq-column">
+                    <h3>Para Clientes</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Como faço para encontrar uma barbearia próxima?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Você pode usar nossa barra de pesquisa na página inicial para buscar por cidade, estado ou nome da barbearia. Também oferecemos filtros para refinar sua busca por avaliações, serviços oferecidos e preços.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Como faço para agendar um horário?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Após encontrar a barbearia desejada, basta clicar no botão "Agendar" na página da barbearia. Você poderá escolher o serviço, profissional, data e horário disponíveis. É necessário estar cadastrado e logado para realizar agendamentos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Posso cancelar ou reagendar meu horário?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sim, você pode cancelar ou reagendar seu horário através da seção "Meus Agendamentos" no seu perfil. Cada barbearia tem sua própria política de cancelamento, geralmente permitindo alterações com até 24 horas de antecedência sem custo adicional.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Como funciona o sistema de avaliações?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Após cada atendimento, você receberá um convite para avaliar o serviço. Sua avaliação é importante para manter a qualidade da plataforma e ajudar outros clientes a escolherem os melhores profissionais. As avaliações são baseadas em uma escala de 1 a 5 estrelas e você pode adicionar comentários.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQs para Empresas -->
+                <div class="faq-column">
+                    <h3>Para Empresas</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Como cadastrar minha barbearia na plataforma?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Para cadastrar sua barbearia, clique em "Cadastrar" no menu superior e selecione a opção "Sou uma Empresa". Você precisará fornecer informações como CNPJ, endereço, horário de funcionamento, serviços oferecidos e fotos do estabelecimento. Após a verificação dos dados, sua barbearia estará disponível na plataforma.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Quais são as taxas cobradas pelo BarbersClub?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>O BarbersClub oferece diferentes planos de assinatura, começando com um plano básico gratuito com funcionalidades limitadas. Os planos pagos incluem mais recursos como destaque nas buscas, relatórios detalhados e sistema de fidelidade. Cobramos uma pequena taxa por agendamento realizado através da plataforma, que varia de acordo com o plano escolhido.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Como gerenciar a agenda e horários disponíveis?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Através do painel administrativo, você pode configurar os horários de funcionamento, definir intervalos entre atendimentos, gerenciar a disponibilidade de cada profissional e bloquear horários específicos. O sistema é intuitivo e permite visualização diária, semanal ou mensal da agenda.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Como responder às avaliações dos clientes?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No painel administrativo, na seção "Avaliações", você pode visualizar e responder a todos os comentários deixados pelos clientes. Recomendamos sempre responder às avaliações, sejam positivas ou negativas, demonstrando atenção e cuidado com a experiência do cliente. Isso ajuda a construir uma reputação sólida na plataforma.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>BarbersClub</h2>
+                    <p>Conecte-se com os melhores barbeiros da cidade</p>
+                </div>
+                
+                <!-- Seção de Suporte -->
+                <div class="footer-section">
+                    <h3>Suporte</h3>
+                    <ul class="support-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Av. Independência, 846 - Taubaté - SP, 12031-001</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:barbersclub2025@gmail.com">barbersclub2025@gmail.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:+5512992201968">+55 12 99220-1968</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-instagram"></i>
+                            <a href="https://www.instagram.com/barbers.club2025" target="_blank">@barbers.club2025</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Seção Sobre Nós -->
+                <div class="footer-section">
+                    <h3>Sobre Nós</h3>
+                    <ul class="footer-links">
+                        <li>
+                            <i class="fas fa-envelope-open-text"></i>
+                            <a href="#">Contato</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-shield-alt"></i>
+                            <a href="#">Política de Privacidade</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-contract"></i>
+                            <a href="#">Termos de Serviço</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BarbersClub. Todos os direitos reservados.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/barbers.club2025" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script para os dropdowns de FAQ
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Fecha todos os outros itens
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Alterna o estado do item atual
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

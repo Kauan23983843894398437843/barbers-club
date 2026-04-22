@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Agendamentos - BarbersClub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e Estilos Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #1A1A1A;
+            --orange: #FF6B00;
+            --white: #FFFFFF;
+            --light-gray: #E5E5E5;
+            --dark-gray: #333333;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--light-gray);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Estilos de Botões */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--orange);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #e05e00;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--orange);
+            border: 1px solid var(--orange);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        /* Estilos da Barra de Navegação */
+        .navbar {
+            background-color: var(--black);
+            color: var(--white);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-center {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+        }
+
+        .search-container {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            background-color: transparent;
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-btn {
+            background-color: transparent;
+            color: var(--white);
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-icon {
+            color: var(--white);
+            font-size: 1.2rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-icon .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--orange);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+       .user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    border: none; /* removida */
+}
+
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-menu ul {
+            list-style: none;
+        }
+
+        .dropdown-menu li {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--orange);
+        }
+
+        .dropdown-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Estilos da Seção de Agendamentos */
+        .appointments-section {
+            padding: 120px 0 60px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--black);
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--black);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--orange);
+        }
+
+        /* Estilos do Próximo Agendamento */
+        .next-appointment {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .appointment-card {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .appointment-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .appointment-left {
+            flex: 0 0 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 15px 10px;
+        }
+
+        .appointment-date {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .appointment-month {
+            font-size: 1rem;
+            color: var(--dark-gray);
+            text-transform: uppercase;
+        }
+
+        .appointment-time {
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--orange);
+            font-size: 1.2rem;
+        }
+
+        .appointment-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .appointment-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+
+        .appointment-info p {
+            color: var(--dark-gray);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .appointment-info i {
+            color: var(--orange);
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .appointment-service {
+            display: inline-block;
+            background-color: #f5f5f5;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        .appointment-actions {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-reschedule, .btn-cancel {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        .no-appointments {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .no-appointments i {
+            font-size: 4rem;
+            color: var(--light-gray);
+            margin-bottom: 20px;
+        }
+
+        .no-appointments h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+
+        .no-appointments p {
+            color: var(--dark-gray);
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Estilos do Histórico de Agendamentos */
+        .appointments-history {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .history-item {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .history-left {
+            flex: 0 0 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 12px 8px;
+        }
+
+        .history-date {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .history-month {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            text-transform: uppercase;
+        }
+
+        .history-time {
+            margin-top: 8px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .history-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .history-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+
+        .history-info p {
+            color: var(--dark-gray);
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .history-info i {
+            color: var(--orange);
+            margin-right: 5px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .history-service {
+            display: inline-block;
+            background-color: #f5f5f5;
+            color: var(--dark-gray);
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .history-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .status-completed {
+            background-color: #e6f7e6;
+            color: #2e7d32;
+        }
+
+        .status-cancelled {
+            background-color: #fbe9e7;
+            color: #c62828;
+        }
+
+        .history-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn-review {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        .btn-rebook {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        .no-history {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .no-history i {
+            font-size: 3rem;
+            color: var(--light-gray);
+            margin-bottom: 15px;
+        }
+
+        .no-history h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+
+        .no-history p {
+            color: var(--dark-gray);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Estilos do Rodapé */
+        .footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--orange);
+        }
+
+        /* Estilos Responsivos */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-wrap: wrap;
+            }
+            
+            .nav-center {
+                order: 3;
+                margin: 15px 0 0;
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .appointment-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn-reschedule, .btn-cancel {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .history-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn-review, .btn-rebook {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .appointment-card {
+                flex-direction: column;
+            }
+            
+            .appointment-left {
+                flex: 0 0 auto;
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            
+            .history-item {
+                flex-direction: column;
+            }
+            
+            .history-left {
+                flex: 0 0 auto;
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index_cliente.html"><h1>BarbersClub</h1></a>
+            </div>
+            
+            <div class="nav-center">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Buscar barbearias, serviços...">
+                    <button class="search-btn" onclick="window.location.href='busca.html'">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <div class="nav-icon" onclick="window.location.href='meus_agendamentos.html'">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span class="badge">2</span>
+                </div>
+                
+                <div class="user-menu">
+                    <div class="user-avatar" id="user-avatar">
+    <i class="fas fa-user"></i>
+</div>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <ul>
+                            <li><a href="perfil_cliente.html"><i class="fas fa-user"></i> Meu Perfil</a></li>
+                            <li><a href="meus_agendamentos.html"><i class="fas fa-calendar-check"></i> Meus Agendamentos</a></li>
+                            <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Seção de Agendamentos -->
+    <section class="appointments-section">
+        <div class="container">
+            <h1 class="section-title">Meus Agendamentos</h1>
+            
+            <!-- Próximo Agendamento -->
+            <h2 class="section-subtitle">Próximo Agendamento</h2>
+            
+            <!-- Exemplo com próximo agendamento -->
+            <div class="next-appointment" id="next-appointment">
+                <div class="appointment-card">
+                    <div class="appointment-left">
+                        <div class="appointment-date">15</div>
+                        <div class="appointment-month">Mai</div>
+                        <div class="appointment-time">14:30</div>
+                    </div>
+                    <div class="appointment-info">
+                        <h3>Cortes Clássicos</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Av. Paulista, 1000 - São Paulo, SP</p>
+                        <p><i class="fas fa-user"></i> Barbeiro: Carlos Silva</p>
+                        <p><i class="fas fa-clock"></i> Duração: 50 minutos</p>
+                        <span class="appointment-service">Corte + Barba</span>
+                        
+                        <div class="appointment-actions">
+                            <a href="#" class="btn btn-secondary btn-reschedule">Reagendar</a>
+                            <a href="#" class="btn btn-secondary btn-cancel">Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo sem próximo agendamento (inicialmente oculto) -->
+            <div class="no-appointments" id="no-appointments" style="display: none;">
+                <i class="far fa-calendar-times"></i>
+                <h3>Você não possui agendamentos</h3>
+                <p>Agende um horário em uma de nossas barbearias parceiras e aproveite o melhor serviço de barbearia da cidade.</p>
+                <a href="busca.html" class="btn btn-primary">Agendar Agora</a>
+            </div>
+            
+            <!-- Histórico de Agendamentos -->
+            <h2 class="section-subtitle">Histórico de Agendamentos</h2>
+            
+            <!-- Exemplo com histórico -->
+            <div class="appointments-history" id="appointments-history">
+                <div class="history-list">
+                    <!-- Agendamento Histórico 1 -->
+                    <div class="history-item">
+                        <div class="history-left">
+                            <div class="history-date">28</div>
+                            <div class="history-month">Abr</div>
+                            <div class="history-time">11:00</div>
+                        </div>
+                        <div class="history-info">
+                            <h4>Estilos Urbanos</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> Rua Augusta, 500 - São Paulo, SP</p>
+                            <p><i class="fas fa-user"></i> Barbeiro: Marcos Oliveira</p>
+                            <span class="history-service">Corte de Cabelo</span>
+                            <span class="history-status status-completed">Concluído</span>
+                            
+                            <div class="history-actions">
+                                <a href="#" class="btn btn-secondary btn-review">Avaliar</a>
+                                <a href="#" class="btn btn-primary btn-rebook">Agendar Novamente</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Agendamento Histórico 2 -->
+                    <div class="history-item">
+                        <div class="history-left">
+                            <div class="history-date">10</div>
+                            <div class="history-month">Abr</div>
+                            <div class="history-time">16:30</div>
+                        </div>
+                        <div class="history-info">
+                            <h4>Barbearia Moderna</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> Av. Brigadeiro Faria Lima, 1500 - São Paulo, SP</p>
+                            <p><i class="fas fa-user"></i> Barbeiro: Rafael Santos</p>
+                            <span class="history-service">Barba</span>
+                            <span class="history-status status-cancelled">Cancelado</span>
+                            
+                            <div class="history-actions">
+                                <a href="#" class="btn btn-primary btn-rebook">Agendar Novamente</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Agendamento Histórico 3 -->
+                    <div class="history-item">
+                        <div class="history-left">
+                            <div class="history-date">02</div>
+                            <div class="history-month">Abr</div>
+                            <div class="history-time">09:30</div>
+                        </div>
+                        <div class="history-info">
+                            <h4>Cortes Clássicos</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> Av. Paulista, 1000 - São Paulo, SP</p>
+                            <p><i class="fas fa-user"></i> Barbeiro: Carlos Silva</p>
+                            <span class="history-service">Corte + Barba</span>
+                            <span class="history-status status-completed">Concluído</span>
+                            
+                            <div class="history-actions">
+                                <a href="#" class="btn btn-secondary btn-review">Avaliar</a>
+                                <a href="#" class="btn btn-primary btn-rebook">Agendar Novamente</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo sem histórico (inicialmente oculto) -->
+            <div class="appointments-history" id="no-history" style="display: none;">
+                <div class="no-history">
+                    <i class="fas fa-history"></i>
+                    <h3>Sem histórico de agendamentos</h3>
+                    <p>Você ainda não realizou nenhum agendamento. Quando você agendar e concluir um serviço, ele aparecerá aqui.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 BarbersClub. Todos os direitos reservados.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/barbers.club2025" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle do menu dropdown do usuário
+            const userAvatar = document.getElementById('user-avatar');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+            
+            userAvatar.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('active');
+            });
+            
+            // Fechar o dropdown ao clicar fora dele
+            document.addEventListener('click', function(event) {
+                if (!userAvatar.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.remove('active');
+                }
+            });
+            
+            // Botão para simular alternância entre ter ou não agendamentos
+            // (apenas para demonstração, remover em produção)
+            const toggleButton = document.createElement('button');
+            toggleButton.textContent = 'Alternar Visualização';
+            toggleButton.classList.add('btn', 'btn-secondary');
+            toggleButton.style.marginBottom = '20px';
+            toggleButton.style.marginTop = '20px';
+            
+            document.querySelector('.section-title').after(toggleButton);
+            
+            let hasAppointment = true;
+            let hasHistory = true;
+            
+            toggleButton.addEventListener('click', function() {
+                // Alternar próximo agendamento
+                const nextAppointment = document.getElementById('next-appointment');
+                const noAppointments = document.getElementById('no-appointments');
+                
+                if (hasAppointment) {
+                    nextAppointment.style.display = 'none';
+                    noAppointments.style.display = 'block';
+                } else {
+                    nextAppointment.style.display = 'block';
+                    noAppointments.style.display = 'none';
+                }
+                
+                // Alternar histórico
+                const appointmentsHistory = document.getElementById('appointments-history');
+                const noHistory = document.getElementById('no-history');
+                
+                if (hasHistory) {
+                    appointmentsHistory.style.display = 'none';
+                    noHistory.style.display = 'block';
+                } else {
+                    appointmentsHistory.style.display = 'block';
+                    noHistory.style.display = 'none';
+                }
+                
+                hasAppointment = !hasAppointment;
+                hasHistory = !hasHistory;
+            });
+        });
+    </script>
+</body>
+</html>

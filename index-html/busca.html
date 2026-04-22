@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buscar Barbearias - BarbersClub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    /* Reset e Estilos Base */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --black: #1A1A1A;
+        --orange: #FF6B00;
+        --white: #FFFFFF;
+        --light-gray: #E5E5E5;
+        --dark-gray: #333333;
+        --green: #28a745;
+        --red: #dc3545;
+        --blue: #007bff;
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        line-height: 1.6;
+        color: var(--black);
+        background-color: var(--light-gray);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Estilos de Botões */
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background-color: var(--orange);
+        color: var(--white);
+    }
+
+    .btn-primary:hover {
+        background-color: #e05e00;
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        color: var(--orange);
+        border: 1px solid var(--orange);
+    }
+
+    .btn-secondary:hover {
+        background-color: rgba(255, 107, 0, 0.1);
+    }
+
+    /* Estilos da Barra de Navegação */
+    .navbar {
+        background-color: var(--black);
+        color: var(--white);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+    }
+
+    .logo h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .logo a {
+        color: var(--white);
+        text-decoration: none;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-links a {
+        color: var(--white);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: var(--orange);
+    }
+
+    .nav-icon {
+        color: var(--white);
+        font-size: 1.2rem;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .nav-icon .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--orange);
+        color: var(--white);
+        font-size: 0.7rem;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user-menu {
+        position: relative;
+    }
+
+    .user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    border: none; /* removida */
+}
+
+
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 45px;
+        right: 0;
+        background-color: var(--white);
+        border-radius: 4px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        display: none;
+        z-index: 1000;
+    }
+
+    .dropdown-menu.active {
+        display: block;
+    }
+
+    .dropdown-menu ul {
+        list-style: none;
+    }
+
+    .dropdown-menu li {
+        padding: 10px 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-menu li:last-child {
+        border-bottom: none;
+    }
+
+    .dropdown-menu a {
+        color: var(--dark-gray);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: color 0.3s ease;
+    }
+
+    .dropdown-menu a:hover {
+        color: var(--orange);
+    }
+
+    .dropdown-menu i {
+        width: 20px;
+        text-align: center;
+    }
+
+    /* Estilos da Seção Principal */
+    .main-section {
+        padding: 120px 0 60px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: var(--black);
+    }
+
+    /* Estilos dos Filtros */
+    .filters-container {
+        background-color: var(--white);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    .filters-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        color: var(--black);
+    }
+
+    .filters-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .filter-group {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .filter-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--dark-gray);
+    }
+
+    .filter-control {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .filter-actions {
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+    }
+
+    /* Estilos dos Resultados */
+    .results-container {
+        background-color: var(--white);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .results-header h3 {
+        font-size: 1.3rem;
+        color: var(--black);
+    }
+
+    .results-count {
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+    }
+
+    .sort-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sort-container label {
+        font-weight: 500;
+        color: var(--dark-gray);
+    }
+
+    .sort-select {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Estilos das Barbearias */
+    .barbershop-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .barbershop-card {
+        background-color: var(--white);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .barbershop-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .barbershop-img {
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .barbershop-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .barbershop-card:hover .barbershop-img img {
+        transform: scale(1.05);
+    }
+
+    .barbershop-info {
+        padding: 20px;
+    }
+
+    .barbershop-info h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        color: var(--black);
+    }
+
+    .barbershop-info p {
+        color: var(--dark-gray);
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+    }
+
+    .barbershop-info i {
+        color: var(--orange);
+        margin-right: 5px;
+        width: 16px;
+        text-align: center;
+    }
+
+    .rating {
+        margin-bottom: 15px;
+        color: var(--orange);
+    }
+
+    .rating span {
+        color: var(--dark-gray);
+        margin-left: 5px;
+        font-size: 0.9rem;
+    }
+
+    .barbershop-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .barbershop-price {
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+    }
+
+    .barbershop-price span {
+        color: var(--black);
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    /* Estilos de Paginação */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .pagination-item {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        background-color: var(--white);
+        color: var(--dark-gray);
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .pagination-item:hover {
+        background-color: #f0f0f0;
+    }
+
+    .pagination-item.active {
+        background-color: var(--orange);
+        color: var(--white);
+    }
+
+    /* Estilos do Rodapé */
+    .footer {
+        background-color: var(--black);
+        color: var(--white);
+        padding: 60px 0 20px;
+        margin-top: auto;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .footer-logo h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .footer-logo p {
+        color: var(--light-gray);
+        font-size: 0.9rem;
+        max-width: 300px;
+    }
+
+    .footer-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-section h3::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background-color: var(--orange);
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: var(--light-gray);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: var(--orange);
+    }
+
+    .support-info {
+        list-style: none;
+    }
+
+    .support-info li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--light-gray);
+    }
+
+    .support-info a {
+        color: var(--light-gray);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .support-info a:hover {
+        color: var(--orange);
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--light-gray);
+        font-size: 0.9rem;
+    }
+
+    .footer-social {
+        display: flex;
+        gap: 15px;
+    }
+
+    .footer-social a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background-color: var(--dark-gray);
+        color: var(--white);
+        border-radius: 50%;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .footer-social a:hover {
+        background-color: var(--orange);
+    }
+
+    /* Estilos Responsivos */
+    @media (max-width: 992px) {
+        .barbershop-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .navbar .container {
+            flex-wrap: wrap;
+        }
+        
+        .nav-links {
+            display: none;
+        }
+        
+        .filters-form {
+            flex-direction: column;
+        }
+        
+        .filter-group {
+            width: 100%;
+        }
+        
+        .results-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .barbershop-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .footer-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .footer-bottom {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .filter-actions {
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .filter-actions .btn {
+            width: 100%;
+        }
+        
+        .barbershop-actions {
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        
+        .pagination {
+            flex-wrap: wrap;
+        }
+    }
+</style>
+</head>
+<body>
+<!-- Barra de Navegação -->
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <a href="index_cliente.html"><h1>BarbersClub</h1></a>
+        </div>
+        
+        <div class="nav-links">
+            <a href="index_cliente.html">Início</a>
+            <a href="busca.html" class="active">Buscar</a>
+            <a href="meus_agendamentos.html">Meus Agendamentos</a>
+        </div>
+        
+        <div class="nav-right">
+            <div class="nav-icon" onclick="window.location.href='meus_agendamentos.html'" title="Meus Agendamentos">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="badge">2</span>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-avatar" id="user-avatar">
+    <i class="fas fa-user"></i>
+</div>
+
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <ul>
+                        <li><a href="perfil_cliente.html"><i class="fas fa-user"></i> Meu Perfil</a></li>
+                        <li><a href="meus_agendamentos.html"><i class="fas fa-calendar-alt"></i> Meus Agendamentos</a></li>
+                        <li><a href="favoritos.html"><i class="fas fa-heart"></i> Favoritos</a></li>
+                        <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Seção Principal -->
+<section class="main-section">
+    <div class="container">
+        <h1 class="section-title">Buscar Barbearias</h1>
+        
+        <!-- Filtros -->
+        <div class="filters-container">
+            <h3 class="filters-title">Filtrar Barbearias</h3>
+            <form class="filters-form">
+                <div class="filter-group">
+                    <label for="location-filter">Localização</label>
+                    <input type="text" id="location-filter" class="filter-control" placeholder="Digite um bairro ou região">
+                </div>
+                
+                <div class="filter-group">
+                    <label for="service-filter">Serviço</label>
+                    <select id="service-filter" class="filter-control">
+                        <option value="">Todos os Serviços</option>
+                        <option value="corte">Corte de Cabelo</option>
+                        <option value="barba">Barba</option>
+                        <option value="combo">Corte + Barba</option>
+                        <option value="coloracao">Coloração</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="rating-filter">Avaliação Mínima</label>
+                    <select id="rating-filter" class="filter-control">
+                        <option value="">Qualquer Avaliação</option>
+                        <option value="5">5 estrelas</option>
+                        <option value="4">4+ estrelas</option>
+                        <option value="3">3+ estrelas</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="price-filter">Faixa de Preço</label>
+                    <select id="price-filter" class="filter-control">
+                        <option value="">Qualquer Preço</option>
+                        <option value="economico">Econômico (até R$ 30)</option>
+                        <option value="medio">Médio (R$ 30 - R$ 50)</option>
+                        <option value="premium">Premium (R$ 50+)</option>
+                    </select>
+                </div>
+                
+                <div class="filter-actions">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    <button type="reset" class="btn btn-secondary">Limpar</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Resultados -->
+        <div class="results-container">
+            <div class="results-header">
+                <div>
+                    <h3>Resultados da Busca</h3>
+                    <p class="results-count">Encontramos 6 barbearias</p>
+                </div>
+                
+                <div class="sort-container">
+                    <label for="sort-results">Ordenar por:</label>
+                    <select id="sort-results" class="sort-select">
+                        <option value="relevancia">Relevância</option>
+                        <option value="avaliacao">Melhor Avaliação</option>
+                        <option value="preco_asc">Menor Preço</option>
+                        <option value="preco_desc">Maior Preço</option>
+                        <option value="distancia">Mais Próximo</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="barbershop-grid">
+                <!-- Barbearia 1 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://www.qpontos.com.br/wp-content/uploads/2024/01/nathon-oski-EW_rqoSdDes-unsplash-scaled.jpg" alt="Barbearia Cortes Clássicos">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Cortes Clássicos</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Av. Paulista, 1000 - São Paulo, SP</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5 (128 avaliações)</span>
+                        </div>
+                        <div class="barbershop-actions">
+                            <div class="barbershop-price">
+                                A partir de <span>R$ 50,00</span>
+                            </div>
+                            <a href="agendamento.html" class="btn btn-primary">Agendar</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barbearia 2 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://www.arquiter.com.br/wp-content/uploads/2024/06/decoracao-para-barbearia-industrial-moderna-pequena_1-e1718140684439.webp" alt="Barbearia Estilo Urbano">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Estilo Urbano</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Rua Augusta, 500 - São Paulo, SP</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.0 (95 avaliações)</span>
+                        </div>
+                        <div class="barbershop-actions">
+                            <div class="barbershop-price">
+                                A partir de <span>R$ 40,00</span>
+                            </div>
+                            <a href="agendamento.html" class="btn btn-primary">Agendar</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barbearia 3 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://gcbarberhouse.pt/wp-content/uploads/2022/02/40.jpg" alt="Barbearia Barba Negra">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Barba Negra</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Rua Oscar Freire, 300 - São Paulo, SP</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0 (76 avaliações)</span>
+                        </div>
+                        <div class="barbershop-actions">
+                            <div class="barbershop-price">
+                                A partir de <span>R$ 60,00</span>
+                            </div>
+                            <a href="agendamento.html" class="btn btn-primary">Agendar</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barbearia 4 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://barbeariafionavalha.com.br/wp-content/uploads/2020/01/FIONAVALHA2UNID-4-1.jpg-Site-1-scaled.jpg" alt="Barbearia Vintage">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Vintage Barber Shop</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Av. Brigadeiro Faria Lima, 800 - São Paulo, SP</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.2 (112 avaliações)</span>
+                        </div>
+                        <div class="barbershop-actions">
+                            <div class="barbershop-price">
+                                A partir de <span>R$ 45,00</span>
+                            </div>
+                            <a href="agendamento.html" class="btn btn-primary">Agendar</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barbearia 5 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://png.pngtree.com/thumb_back/fh260/background/20250112/pngtree-modern-barbershop-interior-with-empty-black-chairs-wooden-walls-and-mirrors-image_16867937.jpg" alt="Barbearia Estilo Moderno">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Estilo Moderno</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Rua Consolação, 450 - São Paulo, SP</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <span>3.5 (68 avaliações)</span>
+                        </div>
+                        <div class="barbershop-actions">
+                            <div class="barbershop-price">
+                                A partir de <span>R$ 30,00</span>
+                            </div>
+                            <a href="agendamento.html" class="btn btn-primary">Agendar</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barbearia 6 -->
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://www.lineastudio.com.br/wp-content/uploads/2017/02/Eles-em-destaque-Barbearia-Padova-01.jpg" alt="Barbearia Gentleman">
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Gentleman's Club</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Av. Rebouças, 600 - São Paulo, SP</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.7 (145 avaliações)</span>
+                        </div>
+                        <div class="barbershop-actions">
+                            <div class="barbershop-price">
+                                A partir de <span>R$ 55,00</span>
+                            </div>
+                            <a href="agendamento.html" class="btn btn-primary">Agendar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Paginação -->
+            <div class="pagination">
+                <a href="#" class="pagination-item"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="pagination-item active">1</a>
+                <a href="#" class="pagination-item">2</a>
+                <a href="#" class="pagination-item">3</a>
+                <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Rodapé -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>BarbersClub</h2>
+                <p>A plataforma que conecta você às melhores barbearias da sua região.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="index_cliente.html">Início</a></li>
+                    <li><a href="busca.html">Buscar Barbearias</a></li>
+                    <li><a href="meus_agendamentos.html">Meus Agendamentos</a></li>
+                    <li><a href="perfil_cliente.html">Meu Perfil</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Para Barbearias</h3>
+                <ul class="footer-links">
+                    <li><a href="cadastro_barbearia.html">Cadastre sua Barbearia</a></li>
+                    <li><a href="login_barbearia.html">Login para Barbearias</a></li>
+                    <li><a href="planos.html">Planos e Preços</a></li>
+                    <li><a href="recursos.html">Recursos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Suporte</h3>
+                <ul class="support-info">
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:contato@barbersclub.com.br">contato@barbersclub.com.br</a></li>
+                    <li><i class="fas fa-phone-alt"></i> (11) 98765-4321</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Av. Paulista, 1000 - São Paulo, SP</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 BarbersClub. Todos os direitos reservados.</p>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/barbers.club2025" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle do menu dropdown do usuário
+        const userAvatar = document.getElementById('user-avatar');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        
+        userAvatar.addEventListener('click', function() {
+            dropdownMenu.classList.toggle('active');
+        });
+        
+        // Fechar o dropdown ao clicar fora dele
+        document.addEventListener('click', function(event) {
+            if (!userAvatar.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+        
+        // Funcionalidade para o formulário de filtro
+        const filterForm = document.querySelector('.filters-form');
+        
+        filterForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const locationFilter = document.getElementById('location-filter').value;
+            const serviceFilter = document.getElementById('service-filter').value;
+            const ratingFilter = document.getElementById('rating-filter').value;
+            const priceFilter = document.getElementById('price-filter').value;
+            
+            // Aqui você implementaria a lógica real de filtragem
+            // Esta é apenas uma simulação para demonstração
+            
+            alert(`Filtros aplicados:
+Localização: ${locationFilter || 'Todas'}
+Serviço: ${serviceFilter || 'Todos'}
+Avaliação Mínima: ${ratingFilter || 'Qualquer'}
+Faixa de Preço: ${priceFilter || 'Qualquer'}`);
+        });
+        
+        // Funcionalidade para ordenação dos resultados
+        const sortSelect = document.getElementById('sort-results');
+        
+        sortSelect.addEventListener('change', function() {
+            const sortValue = this.value;
+            
+            // Aqui você implementaria a lógica real de ordenação
+            // Esta é apenas uma simulação para demonstração
+            
+            console.log(`Ordenando por: ${sortValue}`);
+            
+            // Simular um recarregamento da página
+            const barbershopGrid = document.querySelector('.barbershop-grid');
+            barbershopGrid.style.opacity = '0.5';
+            
+            setTimeout(function() {
+                barbershopGrid.style.opacity = '1';
+            }, 500);
+        });
+    });
+</script>
+</body>
+</html>

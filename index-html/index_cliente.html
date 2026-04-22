@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarbersClub - Área do Cliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e Estilos Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #1A1A1A;
+            --orange: #FF6B00;
+            --white: #FFFFFF;
+            --light-gray: #E5E5E5;
+            --dark-gray: #333333;
+            --light-orange: rgba(255, 107, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--white);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Estilos de Botões */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-schedule {
+            background-color: var(--orange);
+            color: var(--white);
+            margin-top: 20px;
+            padding: 12px 30px;
+            font-size: 1rem;
+        }
+
+        .btn-schedule:hover {
+            background-color: #e05e00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(224, 94, 0, 0.2);
+        }
+
+        .btn-book {
+            background-color: var(--orange);
+            color: var(--white);
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn-book:hover {
+            background-color: #e05e00;
+        }
+
+        /* Estilos da Barra de Navegação */
+        .navbar {
+            background-color: var(--black);
+            color: var(--white);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-icon {
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-icon:hover {
+            color: var(--orange);
+        }
+
+        /* Dropdown do Perfil */
+        .profile-dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            padding: 10px 0;
+            margin-top: 12px;
+            display: none;
+            z-index: 1001;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            color: var(--black);
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-menu a i {
+            margin-right: 10px;
+            color: var(--orange);
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--light-gray);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--light-gray);
+            margin: 8px 0;
+        }
+
+        .logout-btn {
+            color: #e74c3c !important;
+        }
+
+        .profile-dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Seção de Boas-vindas */
+        .welcome-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/placeholder.svg?height=500&width=1200');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .welcome-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .welcome-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .welcome-content h2 span {
+            color: var(--orange);
+        }
+
+        .welcome-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--light-gray);
+        }
+
+        /* Estilos da Barra de Pesquisa */
+        .search-container {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background-color: var(--orange);
+            color: var(--white);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #e05e00;
+        }
+
+        /* Seção de Agendamentos */
+        .appointments-section {
+            padding: 60px 0;
+            background-color: var(--white);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--black);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--orange);
+            margin-top: 8px;
+        }
+
+        .view-all {
+            color: var(--orange);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .view-all i {
+            margin-left: 5px;
+            font-size: 0.8rem;
+        }
+
+        .view-all:hover {
+            color: #e05e00;
+        }
+
+        .appointments-container {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 30px;
+            min-height: 200px;
+        }
+
+        /* Estado vazio */
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--orange);
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .empty-state h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+
+        .empty-state p {
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+        }
+
+        /* Cartão de Agendamento */
+        .appointment-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: flex;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .appointment-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .appointment-image {
+            width: 120px;
+            min-width: 120px;
+            max-width: 120px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .appointment-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .appointment-details {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .appointment-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--black);
+        }
+
+        .appointment-info p {
+            color: var(--dark-gray);
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .appointment-info p i {
+            color: var(--orange);
+            margin-right: 5px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .appointment-status {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .status-confirmed {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+        }
+
+        .status-pending {
+            background-color: rgba(243, 156, 18, 0.1);
+            color: #f39c12;
+        }
+
+        .appointment-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .action-btn:hover {
+            background-color: var(--dark-gray);
+            color: var(--white);
+        }
+
+        .action-btn.cancel {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        .action-btn.cancel:hover {
+            background-color: #e74c3c;
+            color: var(--white);
+        }
+
+        .action-btn.reschedule {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .action-btn.reschedule:hover {
+            background-color: #3498db;
+            color: var(--white);
+        }
+
+        /* Seção de Barbearias Recomendadas */
+        .featured {
+            padding: 60px 0;
+            background-color: var(--light-gray);
+        }
+
+        .barbershop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .barbershop-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .barbershop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .barbershop-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .barbershop-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .barbershop-card:hover .barbershop-img img {
+            transform: scale(1.05);
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn i {
+            color: #e74c3c;
+            font-size: 1.1rem;
+        }
+
+        .favorite-btn:hover {
+            background-color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .barbershop-info {
+            padding: 20px;
+        }
+
+        .barbershop-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+
+        .barbershop-info p {
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .barbershop-info i {
+            color: var(--orange);
+            margin-right: 5px;
+        }
+
+        .rating {
+            color: var(--orange);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .rating span {
+            color: var(--dark-gray);
+            margin-left: 5px;
+        }
+
+        /* Estilos do Rodapé */
+        .footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo p {
+            color: var(--light-gray);
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--white);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--orange);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .footer-links li i {
+            color: var(--orange);
+            margin-right: 10px;
+            min-width: 16px;
+            margin-top: 4px;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--orange);
+        }
+
+        .support-info {
+            list-style: none;
+        }
+
+        .support-info li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: var(--light-gray);
+        }
+
+        .support-info i {
+            color: var(--orange);
+            margin-right: 10px;
+            min-width: 16px;
+            margin-top: 4px;
+        }
+
+        .support-info a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .support-info a:hover {
+            color: var(--orange);
+        }
+
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid var(--dark-gray);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--orange);
+        }
+
+        /* Estilos Responsivos */
+        @media (max-width: 768px) {
+            .welcome-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .welcome-content p {
+                font-size: 1rem;
+            }
+            
+            .appointment-card {
+                flex-direction: column;
+            }
+            
+            .appointment-image {
+                width: 100%;
+                max-width: 100%;
+                height: 120px;
+            }
+            
+            .appointment-details {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .appointment-actions {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar .container {
+                padding: 10px 15px;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .search-btn {
+                border-radius: 4px;
+                padding: 10px;
+            }
+            
+            .barbershop-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-section {
+                padding: 100px 0 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>BarbersClub</h1>
+            </div>
+            <div class="nav-icons">
+                <a href="meus_agendamentos.html" class="nav-icon" title="Meus Agendamentos">
+                    <i class="fas fa-calendar-alt"></i>
+                </a>
+                <div class="nav-icon profile-dropdown">
+                    <i class="fas fa-user-circle"></i>
+                    <div class="dropdown-menu">
+                        <a href="perfil_cliente.html"><i class="fas fa-user"></i> Meu Perfil</a>
+                        <a href="meus_agendamentos.html"><i class="fas fa-calendar-check"></i> Agendamentos</a>
+                        <a href="favoritos.html"><i class="fas fa-heart"></i> Favoritos</a>
+                        <a href="avaliacoes.html"><i class="fas fa-star"></i> Minhas Avaliações</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="welcome-section">
+        <div class="container">
+            <div class="welcome-content">
+                <h2>Bem-vindo(a), <span id="clientName">Cliente</span>!</h2>
+                <p>Encontre as melhores barbearias e agende seu próximo corte</p>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="Buscar por nome, cidade ou serviço" class="search-input">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="appointments-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Meus Agendamentos</h2>
+                <a href="meus_agendamentos.html" class="view-all">Ver todos <i class="fas fa-chevron-right"></i></a>
+            </div>
+            
+            <div id="appointmentsContainer" class="appointments-container">
+                
+                <div id="emptyAppointments" class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-calendar-times"></i>
+                    </div>
+                    <h3>Você não possui agendamentos ativos</h3>
+                    <p>Agende seu horário com uma de nossas barbearias parceiras</p>
+                    <a href="buscar_barbearias.html" class="btn btn-schedule">Agendar Agora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured">
+        <div class="container">
+            <h2 class="section-title">Recomendadas para Você</h2>
+            <div class="barbershop-grid">
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://www.qpontos.com.br/wp-content/uploads/2024/01/nathon-oski-EW_rqoSdDes-unsplash-scaled.jpg" alt="Barbearia Cortes Clássicos">
+                        <div class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Cortes Clássicos</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5</span>
+                        </div>
+                        <a href="agendar.html?barbershop=1" class="btn btn-book">Agendar</a>
+                    </div>
+                </div>
+
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://www.arquiter.com.br/wp-content/uploads/2024/06/decoracao-para-barbearia-industrial-moderna-pequena_1-e1718140684439.webp" alt="Barbearia Estilos Urbanos">
+                        <div class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Estilos Urbanos</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Rio de Janeiro, RJ</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0</span>
+                        </div>
+                        <a href="agendar.html?barbershop=2" class="btn btn-book">Agendar</a>
+                    </div>
+                </div>
+
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://gcbarberhouse.pt/wp-content/uploads/2022/02/40.jpg" alt="Barbearia Estilo Gentleman">
+                        <div class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Estilo Gentleman</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Belo Horizonte, MG</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.0</span>
+                        </div>
+                        <a href="agendar.html?barbershop=3" class="btn btn-book">Agendar</a>
+                    </div>
+                </div>
+
+                <div class="barbershop-card">
+                    <div class="barbershop-img">
+                        <img src="https://barbeariafionavalha.com.br/wp-content/uploads/2020/01/FIONAVALHA2UNID-4-1.jpg-Site-1-scaled.jpg" alt="Barbearia Fio da Navalha">
+                        <div class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="barbershop-info">
+                        <h3>Fio da Navalha</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Curitiba, PR</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.7</span>
+                        </div>
+                        <a href="agendar.html?barbershop=4" class="btn btn-book">Agendar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>BarbersClub</h2>
+                    <p>Conecte-se com os melhores barbeiros da cidade</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Suporte</h3>
+                    <ul class="support-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Av. Independência, 846 - Taubaté - SP, 12031-001</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:barbersclub2025@gmail.com">barbersclub2025@gmail.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:+5512992201968">+55 12 99220-1968</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-instagram"></i>
+                            <a href="https://www.instagram.com/barbers.club2025" target="_blank">@barbers.club2025</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Sobre Nós</h3>
+                    <ul class="footer-links">
+                        <li>
+                            <i class="fas fa-envelope-open-text"></i>
+                            <a href="#">Contato</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-shield-alt"></i>
+                            <a href="#">Política de Privacidade</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-contract"></i>
+                            <a href="#">Termos de Serviço</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BarbersClub. Todos os direitos reservados.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/barbers.club2025" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarNomeCliente();
+            
+            carregarAgendamentos();
+            
+            configurarBotoesFavoritos();
+        });
+
+        function carregarNomeCliente() {
+
+            const nomeCliente = "João Silva";
+            document.getElementById('clientName').textContent = nomeCliente;
+        }
+
+        function carregarAgendamentos() {
+
+            const agendamentos = [
+                {
+                    id: 1,
+                    barbearia: "Cortes Clássicos",
+                    servico: "Corte de Cabelo + Barba",
+                    data: "15/07/2025",
+                    horario: "14:30",
+                    barbeiro: "Carlos Silva",
+                    status: "confirmado",
+                    imagem: "https://plus.unsplash.com/premium_photo-1661328131020-f0db94fefa30?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8"
+                },
+                {
+                    id: 2,
+                    barbearia: "Estilos Urbanos",
+                    servico: "Barba Completa",
+                    data: "22/07/2025",
+                    horario: "10:00",
+                    barbeiro: "André Pereira",
+                    status: "pendente",
+                    imagem: "https://media.gettyimages.com/id/1973194125/pt/foto/hairdresser-shaping-eyebrows-of-man-client-using-razor-in-barbershop.jpg?s=612x612&w=gi&k=20&c=sYPSl457MdByoEP8qnPO7XPDG2NwJrBe00rkIS90yC4="
+                }
+            ];
+            
+            if (agendamentos.length > 0) {
+                document.getElementById('emptyAppointments').style.display = 'none';
+                
+                const container = document.getElementById('appointmentsContainer');
+                agendamentos.forEach(agendamento => {
+                    container.appendChild(criarCartaoAgendamento(agendamento));
+                });
+            } else {
+                document.getElementById('emptyAppointments').style.display = 'block';
+            }
+        }
+
+        function criarCartaoAgendamento(agendamento) {
+            const card = document.createElement('div');
+            card.className = 'appointment-card';
+            
+            card.innerHTML = `
+                <div class="appointment-image">
+                    <img src="${agendamento.imagem}" alt="${agendamento.barbearia}">
+                </div>
+                <div class="appointment-details">
+                    <div class="appointment-info">
+                        <h3>${agendamento.barbearia}</h3>
+                        <p><i class="fas fa-cut"></i> ${agendamento.servico}</p>
+                        <p><i class="fas fa-calendar-day"></i> ${agendamento.data} às ${agendamento.horario}</p>
+                        <p><i class="fas fa-user"></i> ${agendamento.barbeiro}</p>
+                        <span class="appointment-status status-${agendamento.status === 'confirmado' ? 'confirmed' : 'pending'}">
+                            ${agendamento.status === 'confirmado' ? 'Confirmado' : 'Pendente'}
+                        </span>
+                    </div>
+                    <div class="appointment-actions">
+                        <button class="action-btn reschedule" onclick="reagendarAgendamento(${agendamento.id})">
+                            <i class="fas fa-clock"></i> Reagendar
+                        </button>
+                        <button class="action-btn cancel" onclick="cancelarAgendamento(${agendamento.id})">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function configurarBotoesFavoritos() {
+            const favoriteBtns = document.querySelectorAll('.favorite-btn');
+            
+            favoriteBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const icon = this.querySelector('i');
+                    
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        exibirMensagem('Adicionado aos favoritos!', 'success');
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        exibirMensagem('Removido dos favoritos!', 'warning');
+                    }
+                });
+            });
+        }
+
+        function reagendarAgendamento(id) {
+            console.log("Reagendar agendamento ID:", id);
+            exibirMensagem('Redirecionando para reagendamento...', 'info');
+        }
+
+        function cancelarAgendamento(id) {
+            if (confirm("Tem certeza que deseja cancelar este agendamento?")) {
+                console.log("Cancelar agendamento ID:", id);
+                
+                const cards = document.querySelectorAll('.appointment-card');
+                if (cards.length <= 1) {
+                    document.getElementById('emptyAppointments').style.display = 'block';
+                }
+                
+                cards.forEach(card => {
+                    if (card.querySelector('.cancel').getAttribute('onclick').includes(id)) {
+                        card.style.opacity = '0';
+                        setTimeout(() => {
+                            card.remove();
+                            exibirMensagem('Agendamento cancelado com sucesso!', 'success');
+                        }, 300);
+                    }
+                });
+            }
+        }
+
+        function exibirMensagem(texto, tipo) {
+            const mensagem = document.createElement('div');
+            mensagem.className = `mensagem mensagem-${tipo}`;
+            mensagem.textContent = texto;
+            mensagem.style.position = 'fixed';
+            mensagem.style.bottom = '20px';
+            mensagem.style.right = '20px';
+            mensagem.style.padding = '10px 20px';
+            mensagem.style.borderRadius = '4px';
+            mensagem.style.color = '#fff';
+            mensagem.style.zIndex = '9999';
+            mensagem.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+            mensagem.style.transition = 'opacity 0.3s ease';
+            
+            switch (tipo) {
+                case 'success':
+                    mensagem.style.backgroundColor = '#27ae60';
+                    break;
+                case 'warning':
+                    mensagem.style.backgroundColor = '#f39c12';
+                    break;
+                case 'error':
+                    mensagem.style.backgroundColor = '#e74c3c';
+                    break;
+                case 'info':
+                    mensagem.style.backgroundColor = '#3498db';
+                    break;
+                default:
+                    mensagem.style.backgroundColor = '#333';
+            }
+            
+            document.body.appendChild(mensagem);
+            
+            setTimeout(() => {
+                mensagem.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(mensagem);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

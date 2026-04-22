@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarbersClub - Agendar Serviço</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #1A1A1A;
+            --orange: #FF6B00;
+            --white: #FFFFFF;
+            --light-gray: #E5E5E5;
+            --dark-gray: #333333;
+            --light-orange: rgba(255, 107, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--light-gray);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            background-color: var(--black);
+            color: var(--white);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icon {
+            color: var(--white);
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-icon:hover {
+            color: var(--orange);
+        }
+
+        .booking-section {
+            padding: 100px 0 60px;
+        }
+
+        .booking-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .service-selection {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--black);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--orange);
+            margin-top: 8px;
+        }
+
+        .service-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .service-item {
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-item:hover {
+            border-color: var(--orange);
+            background-color: var(--light-orange);
+        }
+
+        .service-item.selected {
+            border-color: var(--orange);
+            background-color: var(--light-orange);
+        }
+
+        .service-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .service-price {
+            color: var(--orange);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .service-duration {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .professional-selection {
+            margin-top: 30px;
+        }
+
+        .professional-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .professional-item {
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .professional-item:hover {
+            border-color: var(--orange);
+            background-color: var(--light-orange);
+        }
+
+        .professional-item.selected {
+            border-color: var(--orange);
+            background-color: var(--light-orange);
+        }
+
+        .professional-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .professional-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .professional-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .professional-rating {
+            color: var(--orange);
+            font-size: 0.9rem;
+        }
+
+        .datetime-selection {
+            margin-top: 30px;
+        }
+
+        .date-picker {
+            margin-bottom: 20px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 15px;
+        }
+
+        .calendar-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .calendar-header span {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day:hover:not(.disabled) {
+            border-color: var(--orange);
+            background-color: var(--light-orange);
+        }
+
+        .calendar-day.selected {
+            background-color: var(--orange);
+            color: var(--white);
+            border-color: var(--orange);
+        }
+
+        .calendar-day.disabled {
+            color: var(--light-gray);
+            cursor: not-allowed;
+            background-color: #f9f9f9;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .time-slot {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .time-slot:hover:not(.disabled) {
+            border-color: var(--orange);
+            background-color: var(--light-orange);
+        }
+
+        .time-slot.selected {
+            background-color: var(--orange);
+            color: var(--white);
+            border-color: var(--orange);
+        }
+
+        .time-slot.disabled {
+            color: var(--light-gray);
+            cursor: not-allowed;
+            background-color: #f9f9f9;
+        }
+
+        /* Booking Summary */
+        .booking-summary {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: var(--dark-gray);
+        }
+
+        .summary-value {
+            font-weight: 600;
+        }
+
+        .total-price {
+            font-size: 1.2rem;
+            color: var(--orange);
+        }
+
+        .btn-confirm {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--orange);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-confirm:hover {
+            background-color: #e05e00;
+        }
+
+        .btn-confirm:disabled {
+            background-color: var(--light-gray);
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 992px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-summary {
+                position: static;
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .service-item,
+            .professional-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .professional-avatar {
+                margin: 0 auto;
+            }
+
+            .calendar {
+                font-size: 0.8rem;
+            }
+
+            .time-slots {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+
+        @media (max-width: 576px) {
+            .booking-section {
+                padding: 80px 0 40px;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .service-price {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index_cliente.html" class="logo">
+                <h1>BarbersClub</h1>
+            </a>
+            <div class="nav-icons">
+                <a href="meus_agendamentos.html" class="nav-icon" title="Meus Agendamentos">
+                    <i class="fas fa-calendar-alt"></i>
+                </a>
+                <a href="perfil_cliente.html" class="nav-icon" title="Meu Perfil">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-container">
+                <div class="main-booking-content">
+                    <div class="service-selection">
+                        <h2 class="section-title">Escolha o Serviço</h2>
+                        <div class="service-list">
+                            <div class="service-item" data-service-id="1" data-price="35.00" data-duration="30">
+                                <div class="service-info">
+                                    <h3>Corte de Cabelo</h3>
+                                    <span class="service-duration">30 minutos</span>
+                                </div>
+                                <span class="service-price">R$ 35,00</span>
+                            </div>
+                            <div class="service-item" data-service-id="2" data-price="25.00" data-duration="20">
+                                <div class="service-info">
+                                    <h3>Barba</h3>
+                                    <span class="service-duration">20 minutos</span>
+                                </div>
+                                <span class="service-price">R$ 25,00</span>
+                            </div>
+                            <div class="service-item" data-service-id="3" data-price="55.00" data-duration="45">
+                                <div class="service-info">
+                                    <h3>Corte + Barba</h3>
+                                    <span class="service-duration">45 minutos</span>
+                                </div>
+                                <span class="service-price">R$ 55,00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professional-selection">
+                        <h2 class="section-title">Escolha o Profissional</h2>
+                        <div class="professional-list">
+                            <div class="professional-item" data-professional-id="1">
+                                <div class="professional-avatar">
+                                    <img src="/placeholder.svg?height=60&width=60" alt="Carlos Silva">
+                                </div>
+                                <div class="professional-info">
+                                    <h3>Carlos Silva</h3>
+                                    <div class="professional-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>4.5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="professional-item" data-professional-id="2">
+                                <div class="professional-avatar">
+                                    <img src="/placeholder.svg?height=60&width=60" alt="André Santos">
+                                </div>
+                                <div class="professional-info">
+                                    <h3>André Santos</h3>
+                                    <div class="professional-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>5.0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="datetime-selection">
+                        <h2 class="section-title">Escolha a Data e Horário</h2>
+                        <div class="date-picker">
+                            <div class="calendar-header">
+                                <span>Dom</span>
+                                <span>Seg</span>
+                                <span>Ter</span>
+                                <span>Qua</span>
+                                <span>Qui</span>
+                                <span>Sex</span>
+                                <span>Sáb</span>
+                            </div>
+                            <div class="calendar" id="calendar">
+                            </div>
+                        </div>
+                        <div class="time-slots" id="timeSlots">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-summary">
+                    <h2 class="section-title">Resumo do Agendamento</h2>
+                    <div class="summary-item">
+                        <span class="summary-label">Serviço:</span>
+                        <span class="summary-value" id="selectedService">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Profissional:</span>
+                        <span class="summary-value" id="selectedProfessional">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Data:</span>
+                        <span class="summary-value" id="selectedDate">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Horário:</span>
+                        <span class="summary-value" id="selectedTime">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Duração:</span>
+                        <span class="summary-value" id="serviceDuration">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total:</span>
+                        <span class="summary-value total-price" id="totalPrice">R$ 0,00</span>
+                    </div>
+                    <button class="btn-confirm" id="btnConfirm" disabled>Confirmar Agendamento</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectedService = null;
+            let selectedProfessional = null;
+            let selectedDate = null;
+            let selectedTime = null;
+
+            const serviceItems = document.querySelectorAll('.service-item');
+            serviceItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    serviceItems.forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedService = {
+                        id: this.dataset.serviceId,
+                        name: this.querySelector('h3').textContent,
+                        price: parseFloat(this.dataset.price),
+                        duration: parseInt(this.dataset.duration)
+                    };
+                    updateSummary();
+                });
+            });
+
+            const professionalItems = document.querySelectorAll('.professional-item');
+            professionalItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    professionalItems.forEach(p => p.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedProfessional = {
+                        id: this.dataset.professionalId,
+                        name: this.querySelector('h3').textContent
+                    };
+                    updateSummary();
+                });
+            });
+
+            function generateCalendar() {
+                const calendar = document.getElementById('calendar');
+                const today = new Date();
+                const currentMonth = today.getMonth();
+                const currentYear = today.getFullYear();
+
+                calendar.innerHTML = '';
+
+                const firstDay = new Date(currentYear, currentMonth, 1);
+                const startingDay = firstDay.getDay();
+
+                const lastDay = new Date(currentYear, currentMonth + 1, 0);
+                const totalDays = lastDay.getDate();
+
+                for (let i = 0; i < startingDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day disabled';
+                    calendar.appendChild(emptyDay);
+                }
+
+                for (let day = 1; day <= totalDays; day++) {
+                    const dateCell = document.createElement('div');
+                    dateCell.className = 'calendar-day';
+                    dateCell.textContent = day;
+
+                    const date = new Date(currentYear, currentMonth, day);
+                    if (date < today) {
+                        dateCell.classList.add('disabled');
+                    } else {
+                        dateCell.addEventListener('click', function() {
+                            document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                            this.classList.add('selected');
+                            selectedDate = date;
+                            generateTimeSlots();
+                            updateSummary();
+                        });
+                    }
+
+                    calendar.appendChild(dateCell);
+                }
+            }
+
+            function generateTimeSlots() {
+                const timeSlots = document.getElementById('timeSlots');
+                timeSlots.innerHTML = '';
+
+                const slots = [
+                    '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+                    '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
+                    '17:00', '17:30', '18:00'
+                ];
+
+                slots.forEach(time => {
+                    const slot = document.createElement('div');
+                    slot.className = 'time-slot';
+                    slot.textContent = time;
+
+                    slot.addEventListener('click', function() {
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                        this.classList.add('selected');
+                        selectedTime = time;
+                        updateSummary();
+                    });
+
+                    timeSlots.appendChild(slot);
+                });
+            }
+
+            function updateSummary() {
+                document.getElementById('selectedService').textContent = selectedService ? selectedService.name : '-';
+                document.getElementById('selectedProfessional').textContent = selectedProfessional ? selectedProfessional.name : '-';
+                document.getElementById('selectedDate').textContent = selectedDate ? selectedDate.toLocaleDateString() : '-';
+                document.getElementById('selectedTime').textContent = selectedTime || '-';
+                document.getElementById('serviceDuration').textContent = selectedService ? `${selectedService.duration} minutos` : '-';
+                document.getElementById('totalPrice').textContent = selectedService ? `R$ ${selectedService.price.toFixed(2)}` : 'R$ 0,00';
+
+                const btnConfirm = document.getElementById('btnConfirm');
+                btnConfirm.disabled = !(selectedService && selectedProfessional && selectedDate && selectedTime);
+            }
+
+            generateCalendar();
+            generateTimeSlots();
+
+            document.getElementById('btnConfirm').addEventListener('click', function() {
+                if (selectedService && selectedProfessional && selectedDate && selectedTime) {
+                    const bookingData = {
+                        serviceId: selectedService.id,
+                        professionalId: selectedProfessional.id,
+                        date: selectedDate.toISOString().split('T')[0],
+                        time: selectedTime
+                    };
+
+                    console.log('Booking data:', bookingData);
+                    alert('Agendamento confirmado com sucesso!');
+                    window.location.href = 'meus_agendamentos.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

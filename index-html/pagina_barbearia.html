@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Página - BarbersClub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e Estilos Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #1A1A1A;
+            --orange: #FF6B00;
+            --white: #FFFFFF;
+            --light-gray: #E5E5E5;
+            --dark-gray: #333333;
+            --green: #28a745;
+            --red: #dc3545;
+            --blue: #007bff;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--light-gray);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Estilos de Botões */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--orange);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #e05e00;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--orange);
+            border: 1px solid var(--orange);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        .btn-success {
+            background-color: var(--green);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: var(--red);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        .btn-view {
+            background-color: var(--blue);
+            color: var(--white);
+        }
+
+        .btn-view:hover {
+            background-color: #0069d9;
+        }
+
+        /* Estilos da Barra de Navegação */
+        .navbar {
+            background-color: var(--black);
+            color: var(--white);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-icon {
+            color: var(--white);
+            font-size: 1.2rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-icon .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--orange);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    border: none; /* removida */
+}
+
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-menu ul {
+            list-style: none;
+        }
+
+        .dropdown-menu li {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--orange);
+        }
+
+        .dropdown-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Estilos da Seção Principal */
+        .main-section {
+            padding: 120px 0 60px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--black);
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--black);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--orange);
+        }
+
+        /* Estilos do Perfil da Barbearia */
+        .profile-container {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        }
+
+        .profile-photo-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .profile-photo-container:hover .profile-photo-overlay {
+            opacity: 1;
+        }
+
+        .profile-photo-overlay a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .profile-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .form-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--black);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--orange);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .view-page-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+        }
+
+        /* Estilos dos Serviços */
+        .services-container {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .services-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .services-header h3 {
+            font-size: 1.3rem;
+            color: var(--black);
+        }
+
+        .services-list {
+            margin-bottom: 30px;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .service-item:last-child {
+            border-bottom: none;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--black);
+        }
+
+        .service-description {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .service-price {
+            font-weight: 600;
+            color: var(--orange);
+            font-size: 1.1rem;
+            margin: 0 20px;
+        }
+
+        .service-duration {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            margin-right: 20px;
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Estilos do Modal de Serviço */
+        .service-modal {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .service-modal.active {
+            display: block;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            color: var(--black);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-gray);
+            cursor: pointer;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        /* Estilos do Rodapé */
+        .footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--orange);
+        }
+
+        /* Estilos Responsivos */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-wrap: wrap;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .profile-photo-container {
+                margin-bottom: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .service-price, .service-duration {
+                margin: 5px 0;
+            }
+            
+            .service-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .form-actions .btn {
+                width: 100%;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .view-page-btn {
+                position: static;
+                margin-bottom: 20px;
+                text-align: center;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index_barbearia.html"><h1>BarbersClub</h1></a>
+            </div>
+            
+            <div class="nav-right">
+                <div class="nav-icon" onclick="window.location.href='pagina_barbearia.html'" title="Página da Barbearia">
+                    <i class="fas fa-store"></i>
+                </div>
+                
+                <div class="nav-icon" onclick="window.location.href='agendamentos_barbearia.html'" title="Agendamentos">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span class="badge">5</span>
+                </div>
+                
+                <div class="user-menu">
+                    <div class="user-avatar" id="user-avatar">
+    <i class="fas fa-user"></i>
+</div>
+
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <ul>
+                            <li><a href="perfil_barbearia.html"><i class="fas fa-user"></i> Perfil da Barbearia</a></li>
+                            <li><a href="servicos_barbearia.html"><i class="fas fa-cut"></i> Serviços</a></li>
+                            <li><a href="barbeiros.html"><i class="fas fa-users"></i> Barbeiros</a></li>
+                            <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Seção Principal -->
+    <section class="main-section">
+        <div class="container">
+            <h1 class="section-title">Gerenciar Página da Barbearia</h1>
+            
+            <!-- Botão para visualizar a página pública -->
+            <a href="agendamento.html" class="btn btn-view view-page-btn">
+                <i class="fas fa-eye"></i> Visualizar Página Pública
+            </a>
+            
+            <!-- Informações da Barbearia -->
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-photo-container">
+                        <img src="/placeholder.svg?height=200&width=200" alt="Logo da Barbearia" class="profile-photo" id="profile-photo">
+                        <div class="profile-photo-overlay">
+                            <a href="#" id="change-photo">Alterar Logo da Barbearia</a>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-form">
+                        <h3 class="form-title">Informações da Barbearia</h3>
+                        <form id="barbershop-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="name">Nome da Barbearia</label>
+                                    <input type="text" id="name" class="form-control" value="Cortes Clássicos">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone">Telefone</label>
+                                    <input type="tel" id="phone" class="form-control" value="(11) 98765-4321">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <input type="email" id="email" class="form-control" value="contato@cortesclassicos.com.br">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="address">Endereço</label>
+                                    <input type="text" id="address" class="form-control" value="Av. Paulista, 1000 - São Paulo, SP">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="opening-hours">Horário de Funcionamento</label>
+                                    <input type="text" id="opening-hours" class="form-control" value="Seg-Sáb: 09:00 - 20:00 | Dom: Fechado">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="instagram">Instagram</label>
+                                    <input type="text" id="instagram" class="form-control" value="@cortesclassicos">
+                                </div>
+                                
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label for="description">Descrição da Barbearia</label>
+                                    <textarea id="description" class="form-control">Somos uma barbearia especializada em cortes clássicos e modernos. Oferecemos um ambiente agradável e profissionais experientes para proporcionar a melhor experiência aos nossos clientes.</textarea>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Serviços -->
+            <h2 class="section-subtitle">Serviços</h2>
+            
+            <div class="services-container">
+                <div class="services-header">
+                    <h3>Gerenciar Serviços</h3>
+                    <button class="btn btn-primary" id="add-service-btn">Adicionar Serviço</button>
+                </div>
+                
+                <div class="services-list" id="services-list">
+                    <!-- Serviço 1 -->
+                    <div class="service-item">
+                        <div class="service-info">
+                            <div class="service-name">Corte de Cabelo</div>
+                            <div class="service-description">Corte masculino com tesoura ou máquina, inclui lavagem.</div>
+                        </div>
+                        <div class="service-price">R$ 50,00</div>
+                        <div class="service-duration">30 min</div>
+                        <div class="service-actions">
+                            <button class="btn btn-secondary btn-sm edit-service-btn">Editar</button>
+                            <button class="btn btn-danger btn-sm delete-service-btn">Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Serviço 2 -->
+                    <div class="service-item">
+                        <div class="service-info">
+                            <div class="service-name">Barba</div>
+                            <div class="service-description">Aparar e modelar a barba, inclui toalha quente e produtos especiais.</div>
+                        </div>
+                        <div class="service-price">R$ 35,00</div>
+                        <div class="service-duration">20 min</div>
+                        <div class="service-actions">
+                            <button class="btn btn-secondary btn-sm edit-service-btn">Editar</button>
+                            <button class="btn btn-danger btn-sm delete-service-btn">Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Serviço 3 -->
+                    <div class="service-item">
+                        <div class="service-info">
+                            <div class="service-name">Corte + Barba</div>
+                            <div class="service-description">Combo de corte de cabelo e barba com desconto especial.</div>
+                        </div>
+                        <div class="service-price">R$ 75,00</div>
+                        <div class="service-duration">50 min</div>
+                        <div class="service-actions">
+                            <button class="btn btn-secondary btn-sm edit-service-btn">Editar</button>
+                            <button class="btn btn-danger btn-sm delete-service-btn">Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Serviço 4 -->
+                    <div class="service-item">
+                        <div class="service-info">
+                            <div class="service-name">Corte Infantil</div>
+                            <div class="service-description">Corte para crianças até 12 anos.</div>
+                        </div>
+                        <div class="service-price">R$ 40,00</div>
+                        <div class="service-duration">25 min</div>
+                        <div class="service-actions">
+                            <button class="btn btn-secondary btn-sm edit-service-btn">Editar</button>
+                            <button class="btn btn-danger btn-sm delete-service-btn">Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Serviço 5 -->
+                    <div class="service-item">
+                        <div class="service-info">
+                            <div class="service-name">Coloração</div>
+                            <div class="service-description">Pintura de cabelo ou barba, inclui produtos de qualidade.</div>
+                        </div>
+                        <div class="service-price">R$ 70,00</div>
+                        <div class="service-duration">60 min</div>
+                        <div class="service-actions">
+                            <button class="btn btn-secondary btn-sm edit-service-btn">Editar</button>
+                            <button class="btn btn-danger btn-sm delete-service-btn">Excluir</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal de Serviço (inicialmente oculto) -->
+                <div class="service-modal" id="service-modal">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modal-title">Adicionar Serviço</h3>
+                        <button class="modal-close" id="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="service-form">
+                            <div class="form-group">
+                                <label for="service-name">Nome do Serviço</label>
+                                <input type="text" id="service-name" class="form-control" placeholder="Ex: Corte de Cabelo">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="service-description">Descrição</label>
+                                <textarea id="service-description" class="form-control" placeholder="Descreva o serviço..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="service-price">Preço (R$)</label>
+                                <input type="number" id="service-price" class="form-control" placeholder="Ex: 50.00">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="service-duration">Duração (minutos)</label>
+                                <input type="number" id="service-duration" class="form-control" placeholder="Ex: 30">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" id="modal-cancel">Cancelar</button>
+                        <button class="btn btn-primary" id="modal-save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 BarbersClub. Todos os direitos reservados.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/barbers.club2025" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle do menu dropdown do usuário
+            const userAvatar = document.getElementById('user-avatar');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+            
+            userAvatar.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('active');
+            });
+            
+            // Fechar o dropdown ao clicar fora dele
+            document.addEventListener('click', function(event) {
+                if (!userAvatar.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.remove('active');
+                }
+            });
+            
+            // Funcionalidade para alterar a foto de perfil
+            const changePhotoLink = document.getElementById('change-photo');
+            const profilePhoto = document.getElementById('profile-photo');
+            
+            changePhotoLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Criar um input de arquivo invisível
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                fileInput.style.display = 'none';
+                
+                // Adicionar o input ao DOM
+                document.body.appendChild(fileInput);
+                
+                // Simular um clique no input
+                fileInput.click();
+                
+                // Lidar com a seleção de arquivo
+                fileInput.addEventListener('change', function() {
+                    if (fileInput.files && fileInput.files[0]) {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            // Atualizar a imagem de perfil
+                            profilePhoto.src = e.target.result;
+                            
+                            // Em um ambiente real, aqui você enviaria a imagem para o servidor
+                            console.log('Logo da barbearia alterada. Em um ambiente real, a imagem seria enviada para o servidor.');
+                        };
+                        
+                        reader.readAsDataURL(fileInput.files[0]);
+                    }
+                    
+                    // Remover o input do DOM
+                    document.body.removeChild(fileInput);
+                });
+            });
+            
+            // Formulário de informações da barbearia
+            const barbershopForm = document.getElementById('barbershop-form');
+            
+            barbershopForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Em um ambiente real, aqui você enviaria os dados para o servidor
+                alert('Informações da barbearia atualizadas com sucesso!');
+            });
+            
+            // Modal de serviço
+            const addServiceBtn = document.getElementById('add-service-btn');
+            const serviceModal = document.getElementById('service-modal');
+            const modalClose = document.getElementById('modal-close');
+            const modalCancel = document.getElementById('modal-cancel');
+            const modalSave = document.getElementById('modal-save');
+            const modalTitle = document.getElementById('modal-title');
+            const serviceForm = document.getElementById('service-form');
+            
+            // Abrir modal para adicionar serviço
+            addServiceBtn.addEventListener('click', function() {
+                modalTitle.textContent = 'Adicionar Serviço';
+                serviceForm.reset();
+                serviceModal.classList.add('active');
+            });
+            
+            // Fechar modal
+            modalClose.addEventListener('click', function() {
+                serviceModal.classList.remove('active');
+            });
+            
+            modalCancel.addEventListener('click', function() {
+                serviceModal.classList.remove('active');
+            });
+            
+            // Salvar serviço
+            modalSave.addEventListener('click', function() {
+                const serviceName = document.getElementById('service-name').value;
+                const serviceDescription = document.getElementById('service-description').value;
+                const servicePrice = document.getElementById('service-price').value;
+                const serviceDuration = document.getElementById('service-duration').value;
+                
+                if (!serviceName || !servicePrice || !serviceDuration) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
+                
+                // Em um ambiente real, aqui você enviaria os dados para o servidor
+                // Esta é apenas uma simulação para demonstração
+                
+                // Criar novo item de serviço
+                const servicesList = document.getElementById('services-list');
+                const newServiceItem = document.createElement('div');
+                newServiceItem.className = 'service-item';
+                newServiceItem.innerHTML = `
+                    <div class="service-info">
+                        <div class="service-name">${serviceName}</div>
+                        <div class="service-description">${serviceDescription || 'Sem descrição'}</div>
+                    </div>
+                    <div class="service-price">R$ ${servicePrice},00</div>
+                    <div class="service-duration">${serviceDuration} min</div>
+                    <div class="service-actions">
+                        <button class="btn btn-secondary btn-sm edit-service-btn">Editar</button>
+                        <button class="btn btn-danger btn-sm delete-service-btn">Excluir</button>
+                    </div>
+                `;
+                
+                // Adicionar o novo serviço à lista
+                servicesList.appendChild(newServiceItem);
+                
+                // Adicionar eventos aos novos botões
+                const editBtn = newServiceItem.querySelector('.edit-service-btn');
+                const deleteBtn = newServiceItem.querySelector('.delete-service-btn');
+                
+                editBtn.addEventListener('click', handleEditService);
+                deleteBtn.addEventListener('click', handleDeleteService);
+                
+                // Fechar o modal
+                serviceModal.classList.remove('active');
+                
+                // Mostrar mensagem de sucesso
+                alert('Serviço adicionado com sucesso!');
+            });
+            
+            // Funcionalidade para editar serviço
+            const editButtons = document.querySelectorAll('.edit-service-btn');
+            
+            function handleEditService() {
+                const serviceItem = this.closest('.service-item');
+                const serviceName = serviceItem.querySelector('.service-name').textContent;
+                const serviceDescription = serviceItem.querySelector('.service-description').textContent;
+                const servicePrice = serviceItem.querySelector('.service-price').textContent.replace('R$ ', '').replace(',00', '');
+                const serviceDuration = serviceItem.querySelector('.service-duration').textContent.replace(' min', '');
+                
+                // Preencher o formulário com os dados do serviço
+                document.getElementById('service-name').value = serviceName;
+                document.getElementById('service-description').value = serviceDescription;
+                document.getElementById('service-price').value = servicePrice;
+                document.getElementById('service-duration').value = serviceDuration;
+                
+                // Alterar o título do modal
+                modalTitle.textContent = 'Editar Serviço';
+                
+                // Abrir o modal
+                serviceModal.classList.add('active');
+                
+                // Sobrescrever o comportamento do botão salvar
+                const originalSaveHandler = modalSave.onclick;
+                
+                modalSave.onclick = function() {
+                    if (!document.getElementById('service-name').value || !document.getElementById('service-price').value || !document.getElementById('service-duration').value) {
+                        alert('Por favor, preencha todos os campos obrigatórios.');
+                        return;
+                    }
+                    
+                    // Atualizar os dados do serviço
+                    serviceItem.querySelector('.service-name').textContent = document.getElementById('service-name').value;
+                    serviceItem.querySelector('.service-description').textContent = document.getElementById('service-description').value || 'Sem descrição';
+                    serviceItem.querySelector('.service-price').textContent = `R$ ${document.getElementById('service-price').value},00`;
+                    serviceItem.querySelector('.service-duration').textContent = `${document.getElementById('service-duration').value} min`;
+                    
+                    // Fechar o modal
+                    serviceModal.classList.remove('active');
+                    
+                    // Restaurar o comportamento original do botão salvar
+                    modalSave.onclick = originalSaveHandler;
+                    
+                    // Mostrar mensagem de sucesso
+                    alert('Serviço atualizado com sucesso!');
+                };
+            }
+            
+            editButtons.forEach(button => {
+                button.addEventListener('click', handleEditService);
+            });
+            
+            // Funcionalidade para excluir serviço
+            const deleteButtons = document.querySelectorAll('.delete-service-btn');
+            
+            function handleDeleteService() {
+                const serviceItem = this.closest('.service-item');
+                const serviceName = serviceItem.querySelector('.service-name').textContent;
+                
+                if (confirm(`Tem certeza que deseja excluir o serviço "${serviceName}"?`)) {
+                    serviceItem.remove();
+                    alert('Serviço excluído com sucesso!');
+                }
+            }
+            
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', handleDeleteService);
+            });
+        });
+    </script>
+</body>
+</html>
